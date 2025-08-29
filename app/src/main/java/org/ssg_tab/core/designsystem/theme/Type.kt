@@ -1,4 +1,4 @@
-package org.ssg_tab.ui.theme
+package org.ssg_tab.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
