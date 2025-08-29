@@ -1,6 +1,6 @@
 ---
 name: issue_template
-about: 이슈 관련 탬플릿 입니
+about: 이슈 관련 탬플릿 입니다!
 title: ''
 labels: ''
 assignees: ''
