@@ -1,4 +1,4 @@
-package org.ssg_tab.ui.theme
+package org.ssg_tab.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
