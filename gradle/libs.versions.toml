@@ -53,6 +53,7 @@ timber = "5.0.1"
 # Kakao
 kakaoMaps = "2.9.5"
 v2All = "2.20.1"
+kakao = "2.21.0"
 
 # ServiceLocation
 playServicesLocation = "21.3.0"
@@ -117,7 +118,7 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 # Kakao
 kakaoMaps = { group = "com.kakao.maps.open", name = "android", version.ref = "kakaoMaps" }
 v2-all = { module = "com.kakao.sdk:v2-all", version.ref = "v2All" }
-
+kakao-user = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
