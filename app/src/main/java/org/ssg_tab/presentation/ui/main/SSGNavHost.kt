@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import org.ssg_tab.presentation.ui.guide.navigation.guideNavigation
 import org.ssg_tab.presentation.ui.home.navigation.homeNavigation
+import org.ssg_tab.presentation.ui.login.navigation.loginNavigation
 import org.ssg_tab.presentation.ui.mypage.navigation.mypageNavigation
 import org.ssg_tab.presentation.ui.storage.navigation.storageNavigation
 
@@ -46,6 +47,11 @@ fun SSGNavHost(
         )
 
         mypageNavigation(
+            paddingValues = paddingValues,
+            snackbarHostState = snackbarHostState
+        )
+
+        loginNavigation(
             paddingValues = paddingValues,
             snackbarHostState = snackbarHostState
         )
