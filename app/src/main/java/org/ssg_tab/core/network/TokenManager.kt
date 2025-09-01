@@ -1,6 +1,8 @@
 package org.ssg_tab.core.network
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import org.ssg_tab.domain.user.UserInformationAuth
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -51,11 +53,11 @@ class TokenManager @Inject constructor(
         return sharedPreferences.getString("PRE_SIGNUP_TOKEN", "").orEmpty()
     }
 
-//    fun saveUserInformation(userInformation: UserInformationAuth) {
-//        val json = Gson().toJson(userInformation)
-//        sharedPreferences.edit().putString("USER_INFORMATION", json).apply()
-//    }
-//
+    fun saveUserInformation(userInformation: UserInformationAuth) {
+        val json = Gson().toJson(userInformation)
+        sharedPreferences.edit().putString("USER_INFORMATION", json).apply()
+    }
+
 //    fun getUserInformation(): UserInformationAuth? {
 //        val json = sharedPreferences.getString("USER_INFORMATION", null)
 //        return if (json != null) Gson().fromJson(json, UserInformationAuth::class.java) else null
