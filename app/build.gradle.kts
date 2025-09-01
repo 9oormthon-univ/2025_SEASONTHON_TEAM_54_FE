@@ -27,7 +27,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", properties["base.url"].toString())
 
-        val kakaoNativeAppKey = properties["kakao.native.app.key"].toString()
+        val kakaoNativeAppKey = properties["KAKAO_NATIVE_APP_KEY"].toString()
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"$kakaoNativeAppKey\"")
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = kakaoNativeAppKey
     }
@@ -79,6 +79,5 @@ dependencies {
 
     implementation(libs.accompanist.systemuicontroller)
 
-    implementation(libs.kakao.user)
-
+    implementation(libs.kakao.v2.all)
 }
