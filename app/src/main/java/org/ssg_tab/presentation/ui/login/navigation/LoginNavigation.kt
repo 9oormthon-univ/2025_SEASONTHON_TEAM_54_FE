@@ -23,8 +23,7 @@ fun NavGraphBuilder.loginNavigation(
 ) {
     composable<Login> {
         LoginScreen(
-            modifier = Modifier,
-            onClick = {}
+            modifier = Modifier
         )
     }
 }
