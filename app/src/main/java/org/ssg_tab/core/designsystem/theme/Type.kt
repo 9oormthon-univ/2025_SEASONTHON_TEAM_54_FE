@@ -11,36 +11,70 @@ import androidx.compose.ui.unit.sp
 import org.ssg_tab.R
 
 val SsgTabFont = FontFamily(Font(R.font.pretendardblack))
+val SsgTabSemiBoldFont = FontFamily(Font(R.font.pretendard_semibold))
+val SSgTabRegularFont = FontFamily(Font(R.font.pretendard_regular))
 
 @Immutable
 data class SsgTabTypography(
     val header :TextStyle,
-    val Large : TextStyle,
-    val Regular : TextStyle,
-    val Small : TextStyle
+    val Large_Sb : TextStyle,
+    val Large_R: TextStyle,
+    val Regular_Sb : TextStyle,
+    val Regular_R : TextStyle,
+    val Small_Sb : TextStyle,
+    val Small_R : TextStyle,
 )
 
 val defaultSsgTabTypography = SsgTabTypography(
     header = TextStyle(
-        fontFamily = SsgTabFont,
+        fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 24.sp,
+        lineHeight = 34.sp,
+        letterSpacing = (-2.5).sp
     ),
-    Large = TextStyle(
-        fontFamily = SsgTabFont,
+    Large_Sb = TextStyle(
+        fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 20.sp,
+        lineHeight = 30.sp,
+        letterSpacing = (-2.5).sp
     ),
-    Regular = TextStyle(
-        fontFamily = SsgTabFont,
+    Large_R = TextStyle(
+        fontFamily = SSgTabRegularFont,
+        fontWeight = FontWeight.Black,
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
+        letterSpacing = (-2.5).sp
+    ),
+    Regular_Sb = TextStyle(
+        fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 14.sp,
+        lineHeight = 24.sp,
+        letterSpacing = (-2.5).sp
     ),
-    Small = TextStyle(
-        fontFamily = SsgTabFont,
+    Regular_R = TextStyle(
+        fontFamily = SSgTabRegularFont,
+        fontWeight = FontWeight.Black,
+        fontSize = 14.sp,
+        lineHeight = 24.sp,
+        letterSpacing = (-2.5).sp
+    ),
+    Small_Sb = TextStyle(
+        fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 12.sp,
-    )
+        lineHeight = 18.sp,
+        letterSpacing = (-2.5).sp
+    ),
+    Small_R = TextStyle(
+        fontFamily = SSgTabRegularFont,
+        fontWeight = FontWeight.Black,
+        fontSize = 12.sp,
+        lineHeight = 18.sp,
+        letterSpacing = (-2.5).sp
+    ),
 )
 
 val LocalSsgTabTypography = staticCompositionLocalOf { defaultSsgTabTypography }
