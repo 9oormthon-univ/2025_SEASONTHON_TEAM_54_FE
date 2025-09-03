@@ -13,7 +13,7 @@ val Black = Color(0xFF1A1A1A)
 val DarkGray = Color(0xFF28303F)
 val MidGray = Color(0xFF5F6474)
 val LightGray = Color(0xFFDDE0E8)
-val White = Color(0xFFEFF9FE)
+val White = Color(0xFFFFFFFE)
 
 @Immutable
 data class SsgTabColors(
