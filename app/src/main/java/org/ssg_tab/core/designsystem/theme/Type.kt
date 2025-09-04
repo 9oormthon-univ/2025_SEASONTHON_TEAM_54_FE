@@ -31,49 +31,42 @@ val defaultSsgTabTypography = SsgTabTypography(
         fontWeight = FontWeight.Black,
         fontSize = 24.sp,
         lineHeight = 34.sp,
-        letterSpacing = (-2.5).sp
     ),
     Large_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 20.sp,
         lineHeight = 30.sp,
-        letterSpacing = (-2.5).sp
     ),
     Large_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 20.sp,
         lineHeight = 30.sp,
-        letterSpacing = (-2.5).sp
     ),
     Regular_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 14.sp,
         lineHeight = 24.sp,
-        letterSpacing = (-2.5).sp
     ),
     Regular_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 14.sp,
         lineHeight = 24.sp,
-        letterSpacing = (-2.5).sp
     ),
     Small_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 12.sp,
         lineHeight = 18.sp,
-        letterSpacing = (-2.5).sp
     ),
     Small_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 12.sp,
         lineHeight = 18.sp,
-        letterSpacing = (-2.5).sp
     ),
 )
 
