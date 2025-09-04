@@ -58,16 +58,12 @@ fun SsgTabTopBar(
         horizontalArrangement = Arrangement.spacedBy(11.dp)
     ) {
 
-        Icon(
-            imageVector = ImageVector.vectorResource(id = leftIcon),
-            contentDescription = "left icon",
-            tint = Color.Unspecified
-        )
 
         if (leftIcon != null) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = leftIcon),
                 contentDescription = "left icon",
+                tint = Color.Unspecified
             )
         }
 
@@ -83,16 +79,11 @@ fun SsgTabTopBar(
         Spacer(modifier = Modifier.weight(1f))
 
 
-        Icon(
-            imageVector = ImageVector.vectorResource(id = rightIcon),
-            contentDescription = "right icon",
-            tint = Color.Unspecified
-        )
-
         if (rightIcon != null) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = rightIcon),
                 contentDescription = "right icon",
+                tint = Color.Unspecified
             )
         }
 

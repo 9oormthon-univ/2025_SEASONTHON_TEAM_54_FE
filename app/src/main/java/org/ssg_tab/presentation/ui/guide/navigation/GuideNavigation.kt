@@ -21,7 +21,9 @@ fun NavGraphBuilder.guideNavigation(
     snackbarHostState: SnackbarHostState
 ) {
     composable<Guide> {
-        GuideScreen()
+        GuideScreen(
+            name = "홀길동"
+        )
     }
 }
 
