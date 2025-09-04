@@ -40,9 +40,9 @@ private fun PreviewSsgTabTopBar() {
 
 @Composable
 fun SsgTabTopBar(
-    leftIcon: Int,
+    leftIcon: Int?,
     middleText: String,
-    rightIcon: Int,
+    rightIcon: Int?,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -51,10 +51,12 @@ fun SsgTabTopBar(
             .background(color = SsgTabTheme.colors.White)
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(id = leftIcon),
-            contentDescription = "left icon",
-        )
+        if (leftIcon != null) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = leftIcon),
+                contentDescription = "left icon",
+            )
+        }
 
         Text(
             text = middleText,
@@ -64,9 +66,11 @@ fun SsgTabTopBar(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Icon(
-            imageVector = ImageVector.vectorResource(id = rightIcon),
-            contentDescription = "right icon",
-        )
+        if (rightIcon != null) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = rightIcon),
+                contentDescription = "right icon",
+            )
+        }
     }
 }

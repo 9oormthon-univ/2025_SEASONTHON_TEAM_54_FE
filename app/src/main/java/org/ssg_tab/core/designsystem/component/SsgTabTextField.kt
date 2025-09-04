@@ -65,7 +65,7 @@ fun SsgTabTextField(
             cursorBrush = SolidColor(SsgTabTheme.colors.LightGray,),
             singleLine = true,
             textStyle = SsgTabTheme.typography.Regular_R,
-            visualTransformation = if (!isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             modifier = focusRequester?.let { modifier.focusRequester(it) } ?: modifier,
