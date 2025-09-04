@@ -7,6 +7,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.ssg_tab.R
 
@@ -31,42 +32,49 @@ val defaultSsgTabTypography = SsgTabTypography(
         fontWeight = FontWeight.Black,
         fontSize = 24.sp,
         lineHeight = 34.sp,
+        letterSpacing = (-0.025).em
     ),
     Large_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 20.sp,
         lineHeight = 30.sp,
+        letterSpacing = (-0.025).em
     ),
     Large_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 20.sp,
         lineHeight = 30.sp,
+        letterSpacing = (-0.025).em
     ),
     Regular_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 14.sp,
         lineHeight = 24.sp,
+        letterSpacing = (-0.025).em
     ),
     Regular_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 14.sp,
         lineHeight = 24.sp,
+        letterSpacing = (-0.025).em
     ),
     Small_Sb = TextStyle(
         fontFamily = SsgTabSemiBoldFont,
         fontWeight = FontWeight.Black,
         fontSize = 12.sp,
         lineHeight = 18.sp,
+        letterSpacing = (-0.025).em
     ),
     Small_R = TextStyle(
         fontFamily = SSgTabRegularFont,
         fontWeight = FontWeight.Black,
         fontSize = 12.sp,
         lineHeight = 18.sp,
+        letterSpacing = (-0.025).em
     ),
 )
 
