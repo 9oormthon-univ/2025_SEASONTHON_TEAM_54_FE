@@ -1,6 +1,7 @@
 package org.ssg_tab.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,11 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 
@@ -50,16 +54,21 @@ fun SsgTabTopBar(
             .fillMaxWidth()
             .background(color = SsgTabTheme.colors.White)
             .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(11.dp)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = leftIcon),
             contentDescription = "left icon",
+            tint = Color.Unspecified
         )
 
         Text(
             text = middleText,
             color = SsgTabTheme.colors.Black,
-            style = SsgTabTheme.typography.header,
+            style = SsgTabTheme.typography.Large_Sb.copy(
+                lineHeight = 20.sp
+            ),
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -67,6 +76,7 @@ fun SsgTabTopBar(
         Icon(
             imageVector = ImageVector.vectorResource(id = rightIcon),
             contentDescription = "right icon",
+            tint = Color.Unspecified
         )
     }
 }
