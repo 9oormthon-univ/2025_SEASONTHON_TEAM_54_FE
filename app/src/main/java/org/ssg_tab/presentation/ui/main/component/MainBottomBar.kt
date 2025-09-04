@@ -25,14 +25,17 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import org.ssg_tab.presentation.ui.main.MainTab
 
 @Composable
@@ -52,17 +55,14 @@ fun MainBottomBar(
                 .background(color = Color.White)
                 .clickable(enabled = false) {}
         ) {
-            HorizontalDivider(
-                color = Color.Gray,
-                thickness = 1.dp
-            )
+
             Row(
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(vertical = 13.dp)
+                    .padding(vertical = 8.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 tabs.forEach { tab ->
                     key(tab.route) {
@@ -115,7 +115,10 @@ private fun RowScope.MainBottomBarItem(
                 Color.DarkGray
             } else {
                 Color.LightGray
-            }
+            },
+            style = SsgTabTheme.typography.Small_R.copy(
+                fontSize = 10.sp
+            )
         )
     }
 }

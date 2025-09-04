@@ -2,6 +2,7 @@ package org.ssg_tab.presentation.ui.home.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -18,10 +19,15 @@ fun NavController.navigateToHome(
 
 fun NavGraphBuilder.homeNavigation(
     paddingValues: PaddingValues,
+    NavController: NavController,
     snackbarHostState: SnackbarHostState
 ) {
     composable<Home> {
-        HomeScreen()
+        HomeScreen(
+            paddingValues = paddingValues,
+            navController = NavController,
+            modifier = Modifier
+        )
     }
 }
 
