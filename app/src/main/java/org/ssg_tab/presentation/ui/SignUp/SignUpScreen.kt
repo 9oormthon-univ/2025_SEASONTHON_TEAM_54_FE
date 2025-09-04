@@ -17,6 +17,7 @@ import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTextField
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
+import org.ssg_tab.presentation.ui.SignUp.component.IconWithText
 
 
 @Composable
@@ -111,8 +112,15 @@ fun SignUpContent(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
+            IconWithText(
+                iconResId = R.drawable.ic_login_valid, // 실제 아이콘 ID
+                text = "사용 가능한 이메일입니다",
+                iconTint = SsgTabTheme.colors.MainBlue,
+                textColor = SsgTabTheme.colors.MainBlue,
+                textSize = 12,
+            )
 
             // 버튼 화면 하단에 고정
             Spacer(modifier = Modifier.weight(1f))
