@@ -12,8 +12,12 @@ val LightBlue = Color(0xFFEFF9FE)
 val Black = Color(0xFF1A1A1A)
 val DarkGray = Color(0xFF28303F)
 val MidGray = Color(0xFF5F6474)
+val SoftGray = Color(0xFF9094A4)
 val LightGray = Color(0xFFDDE0E8)
+val WhiteGray = Color(0xFFF1F3F6)
 val White = Color(0xFFFFFFFE)
+val Error = Color(0xFFDDE0E8)
+val LikePink = Color(0xFFFF3B86)
 
 @Immutable
 data class SsgTabColors(
@@ -24,8 +28,12 @@ data class SsgTabColors(
     val Black: Color,
     val DarkGray: Color,
     val MidGray: Color,
+    val SoftGray: Color,
     val LightGray: Color,
+    val WhiteGray: Color,
     val White: Color,
+    val Error: Color,
+    val LikePink: Color,
 )
 
 val defaultSsgTabColors = SsgTabColors(
@@ -36,8 +44,12 @@ val defaultSsgTabColors = SsgTabColors(
     Black = Black,
     DarkGray = DarkGray,
     MidGray = MidGray,
+    SoftGray = SoftGray,
     LightGray = LightGray,
+    WhiteGray = WhiteGray,
     White = White,
+    Error = Error,
+    LikePink = LikePink
 )
 
 val LocalSsgTabColors = staticCompositionLocalOf { defaultSsgTabColors }
