@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import org.ssg_tab.presentation.ui.guide.navigation.guideNavigation
 import org.ssg_tab.presentation.ui.home.navigation.homeNavigation
@@ -33,6 +34,7 @@ fun SSGNavHost(
     ) {
         homeNavigation(
             paddingValues = paddingValues,
+            NavController = navigator.navController,
             snackbarHostState = snackbarHostState
         )
 

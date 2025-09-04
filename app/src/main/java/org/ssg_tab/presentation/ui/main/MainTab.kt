@@ -17,26 +17,26 @@ enum class MainTab(
     val route: MainTabRoute
 ) {
     HOME(
-        selectedIconResource = R.drawable.ic_bottom_home,
-        unselectedIconResource = R.drawable.ic_bottom_home,
+        selectedIconResource = R.drawable.ic_bottomnav_home_on,
+        unselectedIconResource = R.drawable.ic_bottomnav_home_off,
         label = "홈",
         route = Home
     ),
     STORAGE(
-        selectedIconResource = R.drawable.ic_bottom_home,
-        unselectedIconResource = R.drawable.ic_bottom_home,
+        selectedIconResource = R.drawable.ic_bottomnav_save_onf,
+        unselectedIconResource = R.drawable.ic_bottomnav_save_off,
         label = "보관함",
         route = Storage
     ),
     GUIDE(
-        selectedIconResource = R.drawable.ic_bottom_home,
-        unselectedIconResource = R.drawable.ic_bottom_home,
+        selectedIconResource = R.drawable.ic_bottomnav_study_on,
+        unselectedIconResource = R.drawable.ic_bottomnav_study_off,
         label = "가이드",
         route = Guide
     ),
     MYPAGE(
-        selectedIconResource = R.drawable.ic_bottom_home,
-        unselectedIconResource = R.drawable.ic_bottom_home,
+        selectedIconResource = R.drawable.ic_bottomnav_mypage_on,
+        unselectedIconResource = R.drawable.ic_bottomnav_mypage_off,
         label = "마이",
         route = Mypage
     )
