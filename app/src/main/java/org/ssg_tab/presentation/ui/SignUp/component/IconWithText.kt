@@ -1,4 +1,4 @@
-package org.ssg_tab.presentation.ui.SignUp.component
+package org.ssg_tab.presentation.ui.signup.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

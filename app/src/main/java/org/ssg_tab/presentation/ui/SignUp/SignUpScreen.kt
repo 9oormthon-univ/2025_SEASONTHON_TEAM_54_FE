@@ -1,4 +1,4 @@
-package org.ssg_tab.presentation.ui.SignUp
+package org.ssg_tab.presentation.ui.signup
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
@@ -17,7 +17,7 @@ import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTextField
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
-import org.ssg_tab.presentation.ui.SignUp.component.IconWithText
+import org.ssg_tab.presentation.ui.signup.component.IconWithText
 
 
 @Composable
