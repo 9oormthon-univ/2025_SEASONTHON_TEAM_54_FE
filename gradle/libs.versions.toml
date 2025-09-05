@@ -59,6 +59,7 @@ playServicesLocation = "21.3.0"
 
 # DataStore
 datastorePreferences = "1.1.7"
+composeMaterial = "1.5.0"
 
 [libraries]
 # Test
@@ -118,6 +119,7 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 kakaoMaps = { group = "com.kakao.maps.open", name = "android", version.ref = "kakaoMaps" }
 kakao-v2-all = { module = "com.kakao.sdk:v2-all", version.ref = "kakao" }
 kakao-user = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
