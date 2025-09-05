@@ -12,18 +12,20 @@ import org.ssg_tab.presentation.ui.home.navigation.homeNavigation
 import org.ssg_tab.presentation.ui.login.navigation.loginNavigation
 import org.ssg_tab.presentation.ui.mypage.navigation.mypageNavigation
 import org.ssg_tab.presentation.ui.storage.navigation.storageNavigation
+import org.ssg_tab.presentation.ui.userinformation.navigation.onboardingGraph
 
 
 @Composable
 fun SSGNavHost(
     navigator: MainNavigator,
+    startDestination: Any,
     paddingValues: PaddingValues,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navigator.navController,
-        startDestination = navigator.startDestination,
+        startDestination = startDestination,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
@@ -55,5 +57,8 @@ fun SSGNavHost(
             paddingValues = paddingValues,
             snackbarHostState = snackbarHostState
         )
+
+        onboardingGraph(navigator.navController)
+
     }
 }

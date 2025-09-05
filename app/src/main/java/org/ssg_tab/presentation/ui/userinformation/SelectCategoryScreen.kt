@@ -23,7 +23,9 @@ import org.ssg_tab.presentation.ui.userinformation.component.InterestChip
 
 
 @Composable
-fun SelectCategoryScreen() {
+fun SelectCategoryScreen(
+    onNextClick: () -> Unit
+) {
     val interests = listOf(
         "주식", "취업", "부동산", "청약", "암호화폐", "해외투자", "금융", "펀드", "경제상식"
     )
@@ -45,9 +47,7 @@ fun SelectCategoryScreen() {
             }
             selectedInterests = newSelection
         },
-        onNextClick = {
-            // TODO: '다음' 버튼 클릭 로직
-        }
+        onNextClick = onNextClick
     )
 }
 
@@ -63,7 +63,7 @@ fun SelectCategoryScreenContent(
         containerColor = SsgTabTheme.colors.White,
         topBar = {
             SsgTabTopBar(
-                leftIcon = R.drawable.ic_core_back,
+                leftIcon = null,
                 middleText = "",
                 rightIcon = null,
             )
@@ -135,7 +135,9 @@ fun SelectCategoryScreenContent(
 @Composable
 private fun SelectCategoryScreen_Initial_Preview() {
     SsgTabTheme {
-        SelectCategoryScreen()
+        SelectCategoryScreen(
+            onNextClick = {}
+        )
     }
 }
 
