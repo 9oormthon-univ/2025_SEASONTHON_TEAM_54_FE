@@ -16,11 +16,11 @@ fun LevelBadgeIcon(
     level: Int,
     modifier: Modifier = Modifier
 ) {
-    // level 범위 -> 레벨 뱃지 부여 (범위 임의로 설정 > 수정해야함)
+    // level 범위 -> 레벨 뱃지 부여
     val iconResId = when (level) {
-        in 1..9 -> R.drawable.ic_study_lv1
-        in 10..19 -> R.drawable.ic_study_lv2
-        in 20..29 -> R.drawable.ic_study_lv3
+        in 1..3 -> R.drawable.ic_study_lv1
+        in 4..7 -> R.drawable.ic_study_lv2
+        in 8..10 -> R.drawable.ic_study_lv3
         else -> R.drawable.ic_study_lv4
     }
 
