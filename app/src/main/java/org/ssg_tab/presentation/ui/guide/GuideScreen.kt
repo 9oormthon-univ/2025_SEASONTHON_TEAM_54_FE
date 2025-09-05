@@ -122,63 +122,29 @@ fun GuideScreen(
         AnimatedBottomSheet(
             title = "위로 끌어올려\n다음 퀴즈 풀기",
             expandedContent = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.height(40.dp))
-
-                    Text(
-                        text = "퀴즈",
-                        style = SsgTabTheme.typography.Large_Sb,
-                        color = SsgTabTheme.colors.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Text(
-                        text = "다음 중 올바른 투자 원칙은?",
-                        style = SsgTabTheme.typography.Regular_Sb,
-                        color = SsgTabTheme.colors.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    // 퀴즈 선택지들
-                    Column {
-                        QuizOption("1. 모든 돈을 한 곳에 투자한다")
-                        Spacer(modifier = Modifier.height(12.dp))
-                        QuizOption("2. 분산 투자를 한다")
-                        Spacer(modifier = Modifier.height(12.dp))
-                        QuizOption("3. 감정적으로 투자한다")
-                        Spacer(modifier = Modifier.height(12.dp))
-                        QuizOption("4. 빚을 내서 투자한다")
+                QuizScreen(
+                    quizData = QuizData(
+                        question = "다음 중 올바른 투자 원칙은?",
+                        options = listOf(
+                            "모든 돈을 한 곳에 투자한다",
+                            "분산 투자를 한다",
+                            "감정적으로 투자한다",
+                            "빚을 내서 투자한다"
+                        ),
+                        currentQuestion = 1,
+                        totalQuestions = 4
+                    ),
+                    onOptionSelected = { selectedIndex ->
+                        println("Selected option: $selectedIndex")
+                    },
+                    onBackPressed = {
+                        println("Back pressed from quiz")
                     }
-                }
+                )
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(horizontal = 20.dp)
         )
     }
-}
-
-@Composable
-private fun QuizOption(
-    text: String,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = text,
-        style = SsgTabTheme.typography.Regular_R,
-        color = SsgTabTheme.colors.MidGray,
-        modifier = modifier
-            .background(
-                color = SsgTabTheme.colors.White,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .padding(16.dp)
-    )
 }

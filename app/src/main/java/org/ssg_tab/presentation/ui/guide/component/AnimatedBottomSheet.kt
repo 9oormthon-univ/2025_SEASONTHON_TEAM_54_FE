@@ -88,7 +88,7 @@ fun AnimatedBottomSheet(
     var isExpanded by remember { mutableStateOf(false) }
 
     val animatedOffsetY by animateFloatAsState(
-        targetValue = if (isExpanded) -screenHeight * 0.7f else 0f,
+        targetValue = if (isExpanded) -screenHeight * 0f else 0f,
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
@@ -111,7 +111,7 @@ fun AnimatedBottomSheet(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(if (isExpanded) configuration.screenHeightDp.dp else 200.dp)
+            .height(if (isExpanded) configuration.screenHeightDp.dp * 0.85f else 200.dp)
             .graphicsLayer {
                 translationY = animatedOffsetY + offsetY
             }

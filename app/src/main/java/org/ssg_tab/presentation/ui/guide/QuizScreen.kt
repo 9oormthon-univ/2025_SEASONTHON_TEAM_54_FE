@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -77,7 +78,9 @@ fun QuizScreen(
         modifier = modifier
             .fillMaxSize()
             .background(SsgTabTheme.colors.White)
-            .padding(20.dp)
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -105,61 +108,95 @@ fun QuizScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         LinearProgressIndicator(
-            progress = quizData.currentQuestion.toFloat() / quizData.totalQuestions,
+            progress = { quizData.currentQuestion.toFloat() / quizData.totalQuestions },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(4.dp)
                 .clip(RoundedCornerShape(2.dp)),
             color = Color(0xFF42A5F5),
-            trackColor = SsgTabTheme.colors.LightGray
+            trackColor = SsgTabTheme.colors.LightGray,
         )
 
         Spacer(modifier = Modifier.height(40.dp))
-
-        Row(
-            verticalAlignment = Alignment.Top
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+                .padding(8.dp)
+                .background(
+                    color = SsgTabTheme.colors.White,
+                    shape = RoundedCornerShape(36.dp)
+                )
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(36.dp)
+                )
+                .clip(RoundedCornerShape(36.dp))
         ) {
-            Text(
-                text = "Q.",
-                style = SsgTabTheme.typography.Large_Sb,
-                color = Color(0xFF42A5F5),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier
+                    .padding(top =20.dp, start = 12.dp, end = 20.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+                Text(
+                    text = "Q.",
+                    style = SsgTabTheme.typography.Large_Sb,
+                    color = Color(0xFF42A5F5),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
 
-            Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                text = quizData.question,
-                style = SsgTabTheme.typography.Large_Sb,
-                color = SsgTabTheme.colors.Black,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 28.sp
-            )
-        }
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        quizData.options.forEachIndexed { index, option ->
-            QuizOptionItem(
-                text = option,
-                isSelected = selectedOption == index,
-                onClick = {
-                    selectedOption = index
-                    onOptionSelected(index)
-                }
-            )
-
-            if (index < quizData.options.size - 1) {
-                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = quizData.question,
+                    style = SsgTabTheme.typography.Large_Sb,
+                    color = SsgTabTheme.colors.Black,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 28.sp
+                )
             }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp, start = 20.dp, end = 20.dp)
+            ) {
+                quizData.options.forEachIndexed { index, option ->
+                    QuizOptionItem(
+                        text = option,
+                        isSelected = selectedOption == index,
+                        onClick = {
+                            selectedOption = index
+                            onOptionSelected(index)
+                        }
+                    )
+
+                    if (index < quizData.options.size - 1) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+                }
+
+            }
+
+
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(64.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .background(
+                    color = SsgTabTheme.colors.White,
+                    shape = RoundedCornerShape(20.dp)
+                )
+                .clip(RoundedCornerShape(20.dp))
+                .padding(horizontal = 144.dp)
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(20.dp)
+                ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -170,7 +207,6 @@ fun QuizScreen(
                 modifier = Modifier.size(16.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
 
             Text(
                 text = "${quizData.currentQuestion} / ${quizData.totalQuestions}",
@@ -178,7 +214,6 @@ fun QuizScreen(
                 color = SsgTabTheme.colors.LightGray
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
 
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_study_arrow_right),
