@@ -39,7 +39,9 @@ val weekData = listOf(
 )
 
 @Composable
-fun MyHistoryScreen() {
+fun MyHistoryScreen(
+    onNavigateBack: () -> Unit
+) {
 
     val backgroundBrush = Brush.verticalGradient( // 그라데이션 배경
         colorStops = arrayOf(
@@ -54,6 +56,7 @@ fun MyHistoryScreen() {
         topBar = {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
+                onLeftIconClick = onNavigateBack,
                 middleText = "",
                 rightIcon = null,
             )
@@ -81,6 +84,8 @@ fun MyHistoryScreen() {
 @Composable
 private fun MyHistoryScreenPreview() {
     SsgTabTheme {
-        MyHistoryScreen()
+        MyHistoryScreen(
+            onNavigateBack = {}
+        )
     }
 }

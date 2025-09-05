@@ -18,7 +18,9 @@ import org.ssg_tab.presentation.ui.mypage.component.InterestChip
 
 
 @Composable
-fun SetInterestingScreen() {
+fun SetInterestingScreen(
+    onNavigateBack: () -> Unit
+) {
 
     // 카테고리 목록
     val categories = listOf(
@@ -44,6 +46,7 @@ fun SetInterestingScreen() {
             }
             selectedCategories = newSelected
         },
+        onNavigateBack = onNavigateBack,
         onSaveClick = {
             // TODO: '저장' 버튼 클릭 시 로직 구현
         }
@@ -56,12 +59,14 @@ fun InterestSettingContent(
     selectedCategories: Set<String>,
     isButtonEnabled: Boolean,
     onCategoryClick: (String) -> Unit,
-    onSaveClick: () -> Unit
+    onSaveClick: () -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
+                onLeftIconClick = onNavigateBack,
                 middleText = "",
                 rightIcon = null
             )
@@ -127,6 +132,6 @@ fun InterestSettingContent(
 @Composable
 private fun InterestSettingScreenPreview() {
     SsgTabTheme {
-        SetInterestingScreen()
+        SetInterestingScreen(onNavigateBack = {})
     }
 }
