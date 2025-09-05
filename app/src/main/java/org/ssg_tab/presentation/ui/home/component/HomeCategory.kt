@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +42,7 @@ fun HomeCategory(
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_category_on),
             contentDescription = "category icon",
+            tint = Color.Unspecified
         )
         LazyRow(
             modifier = Modifier
