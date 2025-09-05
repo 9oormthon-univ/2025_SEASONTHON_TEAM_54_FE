@@ -1,14 +1,11 @@
 package org.ssg_tab.presentation.ui.main
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import org.ssg_tab.presentation.ui.guide.navigation.guideNavigation
 import org.ssg_tab.presentation.ui.home.navigation.homeNavigation
@@ -50,8 +47,9 @@ fun SSGNavHost(
 
         mypageNavigation(
             paddingValues = paddingValues,
-            snackbarHostState = snackbarHostState
-        )
+            snackbarHostState = snackbarHostState,
+            navController = navigator.navController,
+            )
 
         loginNavigation(
             paddingValues = paddingValues,

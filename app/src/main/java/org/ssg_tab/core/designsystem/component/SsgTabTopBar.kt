@@ -1,6 +1,7 @@
 package org.ssg_tab.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,14 +29,17 @@ private fun PreviewSsgTabTopBar() {
         Column {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
+                onLeftIconClick = {},
                 middleText = "",
                 rightIcon = 0
             )
             Spacer(modifier = Modifier.padding(10.dp))
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_save,
+                onLeftIconClick = {},
                 middleText = "내 관심목록",
-                rightIcon = R.drawable.ic_core_search
+                rightIcon = R.drawable.ic_core_search,
+                onRightIconClick = {},
             )
         }
 
@@ -48,6 +52,8 @@ fun SsgTabTopBar(
     middleText: String,
     rightIcon: Int?,
     modifier: Modifier = Modifier,
+    onLeftIconClick: () -> Unit = {},
+    onRightIconClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -63,7 +69,8 @@ fun SsgTabTopBar(
             Icon(
                 imageVector = ImageVector.vectorResource(id = leftIcon),
                 contentDescription = "left icon",
-                tint = Color.Unspecified
+                tint = Color.Unspecified,
+                modifier = Modifier.clickable(onClick = onLeftIconClick)
             )
         }
 
@@ -83,7 +90,8 @@ fun SsgTabTopBar(
             Icon(
                 imageVector = ImageVector.vectorResource(id = rightIcon),
                 contentDescription = "right icon",
-                tint = Color.Unspecified
+                tint = Color.Unspecified,
+                modifier = Modifier.clickable(onClick = onRightIconClick),
             )
         }
 

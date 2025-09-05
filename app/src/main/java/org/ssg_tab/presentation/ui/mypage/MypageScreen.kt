@@ -14,7 +14,10 @@ import org.ssg_tab.presentation.ui.mypage.component.UserProfileCard
 
 
 @Composable
-fun MypageScreen() {
+fun MypageScreen(
+    onNavigateToSetInteresting: () -> Unit,
+    onNavigateToMyHistory: () -> Unit,
+) {
     Scaffold(
         containerColor = SsgTabTheme.colors.White,
 
@@ -39,11 +42,11 @@ fun MypageScreen() {
             )
             MenuListItem(
                 text = "관심사 설정",
-                onClick = { /* TODO: 관심사 설정 클릭 로직 */ }
+                onClick = onNavigateToSetInteresting
             )
             MenuListItem(
                 text = "나의 히스토리",
-                onClick = { /* TODO: 나의 히스토리 클릭 로직 */ }
+                onClick = onNavigateToMyHistory
             )
             MenuListItem(
                 text = "설정",
@@ -58,6 +61,9 @@ fun MypageScreen() {
 @Composable
 private fun MyPageScreenPreview() {
     SsgTabTheme {
-        MypageScreen()
+        MypageScreen(
+            onNavigateToSetInteresting = {},
+            onNavigateToMyHistory = {},
+        )
     }
 }
