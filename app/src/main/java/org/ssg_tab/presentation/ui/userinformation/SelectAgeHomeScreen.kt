@@ -92,10 +92,10 @@ fun SelectAgeHomeScreenContent(
 
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_progress_bar_2),
-                contentDescription = "progress_bar",
+                contentDescription = "progress_bar_step2",
                 tint = Color.Unspecified,
-                modifier = Modifier.align(Alignment.CenterHorizontally)            )
-
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
