@@ -13,6 +13,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
+import org.ssg_tab.data.service.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -70,5 +71,11 @@ object NetworkModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("ssg_tab_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieQuizService(retrofit: Retrofit): QuizService{
+        return retrofit.create(QuizService::class.java)
     }
 }
