@@ -111,7 +111,7 @@ fun AnimatedBottomSheet(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(if (isExpanded) configuration.screenHeightDp.dp * 0.85f else 200.dp)
+            .height(if (isExpanded) configuration.screenHeightDp.dp * 1.0f else 200.dp)
             .graphicsLayer {
                 translationY = animatedOffsetY + offsetY
             }

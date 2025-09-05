@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -122,21 +120,7 @@ fun GuideScreen(
         AnimatedBottomSheet(
             title = "위로 끌어올려\n다음 퀴즈 풀기",
             expandedContent = {
-                QuizScreen(
-                    quizData = QuizData(
-                        question = "다음 중 올바른 투자 원칙은?",
-                        options = listOf(
-                            "모든 돈을 한 곳에 투자한다",
-                            "분산 투자를 한다",
-                            "감정적으로 투자한다",
-                            "빚을 내서 투자한다"
-                        ),
-                        currentQuestion = 1,
-                        totalQuestions = 4
-                    ),
-                    onOptionSelected = { selectedIndex ->
-                        println("Selected option: $selectedIndex")
-                    },
+                QuizScreenWithViewModel(
                     onBackPressed = {
                         println("Back pressed from quiz")
                     }
