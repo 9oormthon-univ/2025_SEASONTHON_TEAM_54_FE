@@ -7,7 +7,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +50,7 @@ fun SignUpContent(
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
                 middleText = "",
-                rightIcon = null
+                rightIcon = null,
             )
         }
 
@@ -66,10 +65,7 @@ fun SignUpContent(
 
             // 당신의 첫 슥텝을 응원합니다!
             Text(
-                color = SsgTabTheme.colors.Black,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold,
-                lineHeight = 34.sp,
+                style = SsgTabTheme.typography.header,
 
                 text = buildAnnotatedString {
                     append("당신의 첫 ")
@@ -87,10 +83,9 @@ fun SignUpContent(
             // 1분이면 회원가입 가능해요
             Text(
                 text = "1분이면 회원가입 가능해요",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold,
-                lineHeight = 12.sp,
-                color = SsgTabTheme.colors.SoftGray,
+                style = SsgTabTheme.typography.Small_R.copy(
+                    color = SsgTabTheme.colors.SoftGray
+                )
             )
 
             Spacer(modifier = Modifier.height(48.dp))
@@ -98,8 +93,10 @@ fun SignUpContent(
             // 이메일 입력
             Text(
                 text = "이메일",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                style = SsgTabTheme.typography.Small_Sb.copy(
+                    color = SsgTabTheme.colors.MidGray,
+                    fontSize = 16.sp,
+                ),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -119,7 +116,6 @@ fun SignUpContent(
                 text = "사용 가능한 이메일입니다",
                 iconTint = SsgTabTheme.colors.MainBlue,
                 textColor = SsgTabTheme.colors.MainBlue,
-                textSize = 12,
             )
 
             // 버튼 화면 하단에 고정

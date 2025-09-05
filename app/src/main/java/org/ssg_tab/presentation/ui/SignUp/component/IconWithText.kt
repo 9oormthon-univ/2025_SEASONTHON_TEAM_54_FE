@@ -15,10 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 
@@ -26,15 +24,12 @@ import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 fun IconWithText(
     iconResId: Int,
     text: String,
-    modifier: Modifier = Modifier,
-    iconTint: Color = SsgTabTheme.colors.Black,
+    iconTint: Color = Color.Unspecified,
     textColor: Color = SsgTabTheme.colors.Black,
     textSize: Int = 12,
-    textWeight: FontWeight = FontWeight.Normal,
     spacing: Int = 4
 ) {
     Row(
-        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -47,8 +42,7 @@ fun IconWithText(
         Text(
             text = text,
             color = textColor,
-            fontSize = textSize.sp,
-            fontWeight = textWeight,
+            style = SsgTabTheme.typography.Small_R
         )
     }
 }
@@ -63,7 +57,6 @@ private fun PreviewIconWithText() {
                 text = "사용 가능한 이메일입니다",
                 iconTint = SsgTabTheme.colors.MainBlue,
                 textColor = SsgTabTheme.colors.MainBlue,
-                textSize = 12,
             )
             Spacer(modifier = Modifier.height(16.dp))
             IconWithText(
@@ -71,7 +64,6 @@ private fun PreviewIconWithText() {
                 text = "이미 사용 중인 이메일입니다",
                 iconTint = SsgTabTheme.colors.Error,
                 textColor = SsgTabTheme.colors.Error,
-                textSize = 12,
             )
         }
     }
