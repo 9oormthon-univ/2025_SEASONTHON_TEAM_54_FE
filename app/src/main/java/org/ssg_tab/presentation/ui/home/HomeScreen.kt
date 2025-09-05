@@ -27,8 +27,8 @@ import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import org.ssg_tab.presentation.ui.home.component.HomeActionButton
 import org.ssg_tab.presentation.ui.home.component.HomeCategory
 import org.ssg_tab.presentation.ui.home.component.HomeMainForm
+import org.ssg_tab.presentation.ui.home.component.NewsItem
 import org.ssg_tab.presentation.ui.home.component.HomeTopBar
-import org.ssg_tab.presentation.ui.home.component.JobPosting
 import org.ssg_tab.presentation.ui.home.model.HomeViewModel
 
 @Preview(showBackground = true)
@@ -69,24 +69,32 @@ fun HomeScreen(
         HomeTopBar(onClick = {})
         HomeCategory(modifier = Modifier)
         HomeMainForm(
-            jobPostings = List(5) {
-                JobPosting(
-                    id = it,
-                    title = "Sample Job Title $it",
-                    company = "Sample Company $it",
-                    category = "Sample Category $it",
-                    location = "Sample Location $it",
-                    contractType = "Sample Contract Type $it",
-                    workHours = "Sample Work Hours $it",
-                    salary = "Sample Salary $it",
-                    jobType = "Sample Job Type $it",
-                    duties = "Sample Duties $it",
-                    recruitCount = "Sample Recruit Count $it",
-                    experience = "Sample Experience $it",
-                    education = "Sample Education $it",
-                    disabilityType = "Sample Disability Type $it",
+            newsItems = listOf(
+                NewsItem(
+                    id = 1,
+                    title = "첫 번째 뉴스: 2025년 국가직 9급 8월 일정! 595명 최종 배치",
+                    content = "첫 번째 내용: 2025년 국가직 9급 공채 최종 합격자의 일정이 8월 13일 부터...",
+                    category = "공직",
+                    source = "시사비즈",
+                    imageUrl = "https://picsum.photos/400/300?random=1"
+                ),
+                NewsItem(
+                    id = 2,
+                    title = "두 번째 뉴스: 2번째 숏폼잉",
+                    content = "두 번째 내용: 025년 국가다고 시청하이고 총 595명이 최종 선발됐는데...",
+                    category = "취업",
+                    source = "시사비즈",
+                    imageUrl = "https://picsum.photos/400/300?random=2"
+                ),
+                NewsItem(
+                    id = 3,
+                    title = "세 번째 뉴스: 3번째 숏폼잉",
+                    content = "세 번째 내용: 으아아아아아아아ㅏ 발됐는데, 행정직 339명...",
+                    category = "취업",
+                    source = "시사비즈",
+                    imageUrl = "https://picsum.photos/400/300?random=3"
                 )
-            },
+            ),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .weight(1f),
@@ -98,4 +106,3 @@ fun HomeScreen(
     }
 
 }
-
