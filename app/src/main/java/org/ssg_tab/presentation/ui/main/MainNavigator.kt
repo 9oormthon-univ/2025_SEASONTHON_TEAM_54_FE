@@ -9,9 +9,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import org.ssg_tab.presentation.ui.guide.navigation.navigateToGuide
-import org.ssg_tab.presentation.ui.home.navigation.Home
 import org.ssg_tab.presentation.ui.home.navigation.navigateToHome
-import org.ssg_tab.presentation.ui.login.navigation.Login
 import org.ssg_tab.presentation.ui.mypage.navigation.navigateToMypage
 import org.ssg_tab.presentation.ui.storage.navigation.navigateToStorage
 
@@ -21,8 +19,6 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
-
-    val startDestination = Home
 
     val currentTab: MainTab?
         @Composable get() = MainTab.find { tab ->

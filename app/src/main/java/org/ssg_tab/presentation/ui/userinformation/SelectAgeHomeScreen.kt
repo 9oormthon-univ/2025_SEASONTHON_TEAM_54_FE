@@ -25,7 +25,10 @@ import org.ssg_tab.presentation.ui.userinformation.component.SelectableChip
 
 
 @Composable
-fun SelectAgeHomeScreen() {
+fun SelectAgeHomeScreen(
+    onNavigateBack: () -> Unit,
+    onNextClick: () -> Unit
+) {
     val ageGroups = listOf("20-24세", "25-29세", "30-34세", "35-41세", "기타")
     val regions = listOf(
         "서울", "경기", "인천", "강원", "대전", "세종",
@@ -52,9 +55,8 @@ fun SelectAgeHomeScreen() {
         onRegionSelected = { region ->
             selectedRegion = if (selectedRegion == region) null else region
         },
-        onNextClick = {
-            // TODO: '다음' 버튼 클릭 로직
-        }
+        onNavigateBack = onNavigateBack,
+        onNextClick = onNextClick
     )
 }
 
@@ -68,6 +70,7 @@ fun SelectAgeHomeScreenContent(
     isButtonEnabled: Boolean,
     onAgeGroupSelected: (String) -> Unit,
     onRegionSelected: (String) -> Unit,
+    onNavigateBack: () -> Unit,
     onNextClick: () -> Unit
 ) {
     Scaffold(
@@ -76,7 +79,7 @@ fun SelectAgeHomeScreenContent(
         topBar = {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
-                // onLeftIconClick = onNavigateBack,
+                onLeftIconClick = onNavigateBack,
                 middleText = "",
                 rightIcon = null,
             )
@@ -178,7 +181,10 @@ fun SelectableChipGrid(
 @Composable
 private fun SelectAgeHomeScreen_Initial_Preview() {
     SsgTabTheme {
-        SelectAgeHomeScreen()
+        SelectAgeHomeScreen(
+            onNavigateBack = {},
+            onNextClick = {}
+        )
     }
 }
 
@@ -199,6 +205,7 @@ private fun SelectAgeHomeScreen_RegionVisible_Preview() {
             isButtonEnabled = false,
             onAgeGroupSelected = {},
             onRegionSelected = {},
+            onNavigateBack = {},
             onNextClick = {}
         )
     }

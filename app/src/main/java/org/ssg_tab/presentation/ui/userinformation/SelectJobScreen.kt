@@ -18,7 +18,10 @@ import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 
 @Composable
-fun SelectJobScreen() {
+fun SelectJobScreen(
+    onNavigateBack: () -> Unit,
+    onNextClick: () -> Unit
+) {
     val jobs = listOf("직장인", "취준생", "학생", "프리랜서", "사업자", "공무원", "기타")
 
     var selectedJob by remember { mutableStateOf<String?>(null) }
@@ -32,9 +35,8 @@ fun SelectJobScreen() {
         onJobSelected = { job ->
             selectedJob = if (selectedJob == job) null else job
         },
-        onNextClick = {
-            // TODO: '다음' 버튼 클릭 로직
-        }
+        onNavigateBack = onNavigateBack,
+        onNextClick = onNextClick
     )
 }
 
@@ -44,6 +46,7 @@ fun SelectJobScreenContent(
     selectedJob: String?,
     isButtonEnabled: Boolean,
     onJobSelected: (String) -> Unit,
+    onNavigateBack: () -> Unit,
     onNextClick: () -> Unit
 ) {
     Scaffold(
@@ -51,6 +54,7 @@ fun SelectJobScreenContent(
         topBar = {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_core_back,
+                onLeftIconClick = onNavigateBack,
                 middleText = "",
                 rightIcon = null,
             )
@@ -102,7 +106,10 @@ fun SelectJobScreenContent(
 @Composable
 private fun SelectJobScreen_Initial_Preview() {
     SsgTabTheme {
-        SelectJobScreen()
+        SelectJobScreen(
+            onNavigateBack = {},
+            onNextClick = {}
+        )
     }
 }
 
@@ -115,6 +122,7 @@ private fun SelectJobScreen_Selected_Preview() {
             selectedJob = "취준생",
             isButtonEnabled = true,
             onJobSelected = {},
+            onNavigateBack = {},
             onNextClick = {}
         )
     }
