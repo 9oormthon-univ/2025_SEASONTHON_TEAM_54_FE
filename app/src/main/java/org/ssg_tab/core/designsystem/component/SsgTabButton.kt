@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
@@ -44,12 +45,25 @@ fun SsgTabButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val colorbursh = Brush.verticalGradient(
+        colors = listOf(
+            SsgTabTheme.colors.MainBlue,
+            SsgTabTheme.colors.SubBlue
+        )
+    )
+    val noncolorbursh = Brush.verticalGradient(
+        colors = listOf(
+            SsgTabTheme.colors.LightGray,
+            SsgTabTheme.colors.LightGray
+        )
+    )
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = if (isEnabled) SsgTabTheme.colors.MainBlue else SsgTabTheme.colors.LightGray,
+                brush = if (isEnabled) colorbursh else noncolorbursh,
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(vertical = 18.dp, horizontal = 16.dp)

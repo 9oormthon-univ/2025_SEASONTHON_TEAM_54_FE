@@ -31,7 +31,7 @@ enum class MainTab(
     GUIDE(
         selectedIconResource = R.drawable.ic_bottomnav_study_on,
         unselectedIconResource = R.drawable.ic_bottomnav_study_off,
-        label = "가이드",
+        label = "학습",
         route = Guide
     ),
     MYPAGE(

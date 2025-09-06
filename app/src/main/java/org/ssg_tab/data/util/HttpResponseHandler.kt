@@ -16,12 +16,12 @@ object HttpResponseHandler {
             Result.failure(Exception("API Error: ${this.message}"))
         }
 
-    fun <T> NullableApiResponse<T>.handleNullableApiResponse(): Result<T?> =
-        if (this.status in 200..299) {
-            Result.success(this.data)
-        } else {
-            Result.failure(Exception("Unknown error : ${this.message}"))
-        }
+//    fun <T> NullableApiResponse<T>.handleNullableApiResponse(): Result<T?> =
+//        if (this.status in 200..299) {
+//            Result.success(this.data)
+//        } else {
+//            Result.failure(Exception("Unknown error : ${this.message}"))
+//        }
 
     fun parseHttpException(e: Throwable): Exception {
         return when (e) {

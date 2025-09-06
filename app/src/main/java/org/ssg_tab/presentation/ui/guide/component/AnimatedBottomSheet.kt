@@ -97,13 +97,13 @@ fun AnimatedBottomSheet(
     )
 
     val animatedAlpha by animateFloatAsState(
-        targetValue = if (isExpanded) 1f else 0f,
+        targetValue = if (isExpanded) 0.5f else 0f,
         animationSpec = tween(300),
         label = "expandedContentAlpha"
     )
 
     val collapsedAlpha by animateFloatAsState(
-        targetValue = if (isExpanded) 0f else 1f,
+        targetValue = if (isExpanded) 0f else 0.5f,
         animationSpec = tween(300),
         label = "collapsedContentAlpha"
     )

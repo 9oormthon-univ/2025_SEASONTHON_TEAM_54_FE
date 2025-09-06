@@ -2,6 +2,7 @@ package org.ssg_tab.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val TextBlue = Color(0xFF0073F7)
