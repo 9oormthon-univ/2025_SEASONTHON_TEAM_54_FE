@@ -334,7 +334,7 @@ private fun SwipeCard(
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .offset(y = 12.dp)
+                        .offset(y = 14.dp)
                         .padding(start = 20.dp)
                         .background(
                             color = SsgTabTheme.colors.LightBlue,
@@ -344,7 +344,7 @@ private fun SwipeCard(
                 ) {
                     Text(
                         text = newsItem.category,
-                        color = Color.White,
+                        color = SsgTabTheme.colors.MidGray,
                         style = SsgTabTheme.typography.Small_Sb,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold

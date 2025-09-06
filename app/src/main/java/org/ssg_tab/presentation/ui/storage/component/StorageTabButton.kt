@@ -80,7 +80,7 @@ private fun ToggleButton(
             )
             .clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
