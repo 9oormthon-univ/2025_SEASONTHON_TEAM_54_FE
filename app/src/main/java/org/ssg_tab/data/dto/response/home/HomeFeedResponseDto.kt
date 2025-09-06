@@ -9,6 +9,16 @@ import org.ssg_tab.presentation.ui.home.component.NewsItem
 data class HomeFeedResponseDto(
     @SerialName("contentsPage")
     val contentsPage: ContentsPages,
+)
+
+@Serializable
+data class ContentsPages(
+    @SerialName("totalElements")
+    val totalElements: Long,
+    @SerialName("totalPages")
+    val totalPages: Int,
+    @SerialName("pageable")
+    val pageable: Pageable,
     @SerialName("size")
     val size: Int,
     @SerialName("content")
@@ -16,7 +26,7 @@ data class HomeFeedResponseDto(
     @SerialName("number")
     val number: Int,
     @SerialName("sort")
-    val sort: Parentsorts,
+    val sort: Sort,
     @SerialName("numberOfElements")
     val numberOfElements: Int,
     @SerialName("first")
@@ -27,21 +37,8 @@ data class HomeFeedResponseDto(
     val empty: Boolean,
 )
 
-
 @Serializable
-data class ContentsPages(
-    @SerialName("totalPages")
-    val totalPages: Int,
-    @SerialName("totalElements")
-    val totalElements: Int,
-    @SerialName("pageable")
-    val pageable: pages,
-    @SerialName("unpaged")
-    val unpaged: Boolean,
-)
-
-@Serializable
-data class pages(
+data class Pageable(
     @SerialName("paged")
     val paged: Boolean,
     @SerialName("pageNumber")
@@ -49,23 +46,15 @@ data class pages(
     @SerialName("pageSize")
     val pageSize: Int,
     @SerialName("offset")
-    val offset: Int,
+    val offset: Long,
     @SerialName("sort")
-    val sort: sorts,
+    val sort: Sort,
+    @SerialName("unpaged")
+    val unpaged: Boolean,
 )
 
 @Serializable
-data class Parentsorts(
-    @SerialName("sorted")
-    val sorted: Boolean,
-    @SerialName("empty")
-    val empty: Boolean,
-    @SerialName("unsorted")
-    val unsorted: Boolean,
-)
-
-@Serializable
-data class sorts(
+data class Sort(
     @SerialName("sorted")
     val sorted: Boolean,
     @SerialName("empty")
@@ -77,13 +66,13 @@ data class sorts(
 @Serializable
 data class ContentList(
     @SerialName("id")
-    val id: Int,
+    val id: Long,
     @SerialName("title")
     val title: String,
     @SerialName("imageUrl")
     val imageUrl: String?,
     @SerialName("sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String?,
     @SerialName("body")
     val body: String,
     @SerialName("categories")
@@ -93,7 +82,7 @@ data class ContentList(
 @Serializable
 data class CategoryList(
     @SerialName("categoryId")
-    val id: Int,
+    val categoryId: Long,
     @SerialName("name")
     val name: String,
 )
@@ -101,14 +90,6 @@ data class CategoryList(
 fun HomeFeedResponseDto.toEntity(): HomeFeedEntity {
     return HomeFeedEntity(
         contentsPage = this.contentsPage,
-        size = this.size,
-        content = this.content,
-        number = this.number,
-        sort = this.sort,
-        numberOfElements = this.numberOfElements,
-        first = this.first,
-        last = this.last,
-        empty = this.empty,
     )
 }
 
