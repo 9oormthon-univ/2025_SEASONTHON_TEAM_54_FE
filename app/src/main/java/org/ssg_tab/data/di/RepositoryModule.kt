@@ -12,6 +12,8 @@ import org.ssg_tab.data.repositoryimpl.login.AuthRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.onboarding.OnboardingRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.quiz.QuizCompleteRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.quiz.QuizRepositoryImpl
+import org.ssg_tab.data.repositoryimpl.storage.StorageRepositoryImpl
+import org.ssg_tab.data.repositoryimpl.study.StudyRepositoryImpl
 import org.ssg_tab.domain.repository.DummyRepository
 import org.ssg_tab.domain.repository.UserRepository
 import org.ssg_tab.domain.repository.home.HomeFeedRepository
@@ -20,6 +22,8 @@ import org.ssg_tab.domain.repository.login.AuthRepository
 import org.ssg_tab.domain.repository.onboarding.OnboardingRepository
 import org.ssg_tab.domain.repository.quiz.QuizCompleteRepository
 import org.ssg_tab.domain.repository.quiz.QuizRepository
+import org.ssg_tab.domain.repository.storage.StorageRepository
+import org.ssg_tab.domain.repository.study.StudyRepository
 import javax.inject.Singleton
 
 @Module
@@ -67,4 +71,15 @@ interface RepositoryModule {
     abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+  
+    @Binds
+  abstract fun bindStorageRepository(
+        storageRepositoryImpl: StorageRepositoryImpl
+    ): StorageRepository
+
+
+    @Binds
+    abstract fun bindStudyRepository(
+        studyRepositoryImpl: StudyRepositoryImpl
+    ): StudyRepository
 }

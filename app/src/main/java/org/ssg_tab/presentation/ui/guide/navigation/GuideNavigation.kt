@@ -22,7 +22,6 @@ fun NavGraphBuilder.guideNavigation(
 ) {
     composable<Guide> {
         GuideScreen(
-            name = "홀길동"
         )
     }
 }
