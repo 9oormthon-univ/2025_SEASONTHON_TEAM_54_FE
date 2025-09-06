@@ -40,28 +40,35 @@ object NetworkModule {
         }
     }
 
-    @Provides
-    @Singleton
-    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor {
-        return AuthInterceptor(tokenManager)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor {
+//        return AuthInterceptor(tokenManager)
+//    }
 
     @Provides
     @Singleton
     fun providesOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor // AuthInterceptor 주입받기
+        loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(authInterceptor) // AuthInterceptor 추가
+        .addInterceptor(loggingInterceptor) // ← 이게 빠져있었음
         .build()
+    @Provides
+    @Singleton
+    fun provideJson(): Json {
+        return Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    }
 
     @Provides
     @Singleton
-    fun providesConverterFactory(): Converter.Factory =
-        Json.asConverterFactory("application/json".toMediaType())
+    fun providesConverterFactory(json: Json): Converter.Factory =
+        json.asConverterFactory("application/json".toMediaType())
+
 
     @Provides
     @Singleton

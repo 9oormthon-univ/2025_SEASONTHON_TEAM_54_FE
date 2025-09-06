@@ -1,5 +1,6 @@
 package org.ssg_tab.data.repositoryimpl.login
 
+import org.ssg_tab.data.dto.request.SignInRequestDto
 import org.ssg_tab.data.dto.request.SignUpRequestDto
 import org.ssg_tab.data.dto.response.login.UserInformationDto
 import org.ssg_tab.data.remote.datasource.AuthRemoteDataSource
@@ -15,18 +16,20 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val authRemoteDataSource: AuthRemoteDataSource,
 ) : AuthRepository {
-    override suspend fun signIn(accessToken: String, socialType: String): Result<UserAuth> =
-        safeApiCall {
-            val response = authRemoteDataSource.signIn(accessToken = accessToken, socialType = socialType)
-                .handleApiResponse()
-                .getOrThrow()
+    override suspend fun signIn(signInRequestDto: SignInRequestDto): Result<UserAuth> =
+        runCatching {
+            val response = authRemoteDataSource.signIn(signInRequestDto)
 
-            UserAuth(
-                accessToken = response.accessToken,
-                refreshToken = response.refreshToken
-            )
+            if (response.isSuccess) {
+                UserAuth(
+                    step = response.result.step,
+                    accessToken = response.result.accessToken,
+                    refreshToken = response.result.refreshToken
+                )
+            } else {
+                throw Exception(response.message ?: "로그인에 실패했습니다.")
+            }
         }
-
     override suspend fun signUp(
         preSignupToken: String,
         userInformation: UserInformationAuth?,
@@ -37,9 +40,9 @@ class AuthRepositoryImpl @Inject constructor(
         jobs: List<String>,
     ): Result<SignUpResult> = safeApiCall {
         val userInfoDto = UserInformationDto(
-            email = userInformation?.email ?: "",
-            nickname = userInformation?.nickname ?: "",
-            profileImageUrl = userInformation?.profileImageUrl ?: ""
+            step = userInformation?.step.orEmpty(),
+            accessToken = userInformation?.accessToken.orEmpty(),
+            refreshToken = userInformation?.refreshToken.orEmpty()
         )
         val signUpRequestDto = SignUpRequestDto(
             userInformation = userInfoDto,

@@ -13,8 +13,8 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     private val authApiService: AuthApiService
 ) : AuthRemoteDataSource {
 
-    override suspend fun signIn(accessToken: String, socialType: String): ApiResponse<SignInResponseDto> {
-        return authApiService.signIn(signInRequestDto = SignInRequestDto(kakaoAccessToken = "$accessToken"))
+    override suspend fun signIn(signInRequestDto: SignInRequestDto): ApiResponse<SignInResponseDto> {
+        return authApiService.signIn(signInRequestDto)
     }
 
     override suspend fun signUp(accessToken: String, signUpRequest: SignUpRequestDto): ApiResponse<SignUpResponseDto> {
