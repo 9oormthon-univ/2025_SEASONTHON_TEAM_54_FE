@@ -86,4 +86,6 @@ dependencies {
 
     implementation(libs.androidx.foundation)
 
+    implementation ("androidx.compose.animation:animation:1.9.0")
+
 }
