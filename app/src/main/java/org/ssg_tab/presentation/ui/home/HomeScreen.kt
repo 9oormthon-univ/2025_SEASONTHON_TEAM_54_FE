@@ -33,6 +33,7 @@ import org.ssg_tab.domain.model.entity.home.toNewsItemList
 import org.ssg_tab.presentation.ui.home.component.HomeActionButton
 import org.ssg_tab.presentation.ui.home.component.HomeCategory
 import org.ssg_tab.presentation.ui.home.component.HomeMainForm
+import org.ssg_tab.presentation.ui.home.component.HomeMockComponent
 import org.ssg_tab.presentation.ui.home.component.HomeTopBar
 import org.ssg_tab.presentation.ui.home.component.NewsItem
 import org.ssg_tab.presentation.ui.home.model.HomeViewModel
@@ -68,9 +69,6 @@ fun HomeScreen(
     }
 
     when {
-        state.isLoading -> {
-            LoadingScreen()
-        }
 
         state.error != null -> {
             ErrorScreen(
@@ -92,6 +90,7 @@ fun HomeScreen(
             ) {
                 HomeTopBar(onClick = {})
                 HomeCategory(modifier = Modifier)
+                HomeMockComponent(modifier =Modifier.padding(horizontal = 16.dp))
                 HomeMainForm(
                     newsItems = newsItems,
                     modifier = Modifier
@@ -128,15 +127,6 @@ fun HomeScreen(
     }
 }
 
-@Composable
-private fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
 
 @Composable
 private fun ErrorScreen(

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -49,14 +50,15 @@ fun GuideRankCard(
                 color = SsgTabTheme.colors.MainBlue,
                 shape = RoundedCornerShape(30.dp)
             )
-            .size(120.dp)
+            .padding(horizontal = 23.dp, vertical = 24.dp)
+//            .size(86.dp)
 
     ) {
         Image(
             painter = painterResource(id=R.drawable.img_study_crown),
             contentDescription = "왕",
             modifier = Modifier
-                .size(65.dp)
+                .size(48.dp)
                 .offset(y = -12.dp)
         )
         Text(

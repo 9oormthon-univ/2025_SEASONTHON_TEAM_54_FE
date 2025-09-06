@@ -149,6 +149,5 @@ private fun LevelBadgeIcon(level: Int) {
         imageVector = ImageVector.vectorResource(id = iconRes),
         contentDescription = "레벨 $level 뱃지",
         tint = Color.Unspecified,
-        modifier = Modifier.size(16.dp)
     )
 }

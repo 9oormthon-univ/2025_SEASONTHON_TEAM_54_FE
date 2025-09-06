@@ -33,6 +33,8 @@ fun MypageScreen(
                 leftIcon = R.drawable.ic_bottomnav_mypage_off,
                 middleText = "마이페이지",
                 rightIcon = null,
+                modifier = Modifier
+                    .size(18.dp)
             )
         },
     ) { innerPadding ->
@@ -43,14 +45,14 @@ fun MypageScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             when {
-                uiState.isLoading -> {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
+//                uiState.isLoading -> {
+//                    Box(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        CircularProgressIndicator()
+//                    }
+//                }
 
 //                uiState.error != null -> {
 //                    Column(

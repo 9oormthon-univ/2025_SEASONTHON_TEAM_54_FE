@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,10 @@ fun StorageScreen(
     val state by viewModel.state
     val categories = listOf("전체", "주식", "취업", "청약", "부동산", "암호화폐", "해외투자")
 
+    LaunchedEffect(Unit) {
+        viewModel.refreshData()
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -72,9 +77,6 @@ fun StorageScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         when {
-            state.isLoading -> {
-                LoadingScreen()
-            }
 
             else -> {
                 when (state.selectedSortOption) {
@@ -150,16 +152,6 @@ fun StorageScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 
