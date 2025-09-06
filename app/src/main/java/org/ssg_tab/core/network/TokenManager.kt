@@ -1,8 +1,11 @@
 package org.ssg_tab.core.network
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
-import org.ssg_tab.domain.user.UserInformationAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,56 +13,43 @@ import javax.inject.Singleton
 class TokenManager @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) {
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    private val _logoutEvent = MutableSharedFlow<Unit>()
+    val logoutEvent = _logoutEvent.asSharedFlow()
+
     companion object {
         private const val KEY_ACCESS_TOKEN = "ACCESS_TOKEN"
         private const val KEY_REFRESH_TOKEN = "REFRESH_TOKEN"
     }
 
-    fun getToken(): String {
-        return sharedPreferences.getString(KEY_ACCESS_TOKEN, "").orEmpty()
+    fun getAccessToken(): String {
+        return sharedPreferences.getString(KEY_ACCESS_TOKEN, "") ?: ""
     }
 
-    fun saveToken(token: String) {
+    fun saveAccessToken(token: String) {
         sharedPreferences.edit().putString(KEY_ACCESS_TOKEN, token).apply()
     }
 
     fun getRefreshToken(): String {
-        return sharedPreferences.getString(KEY_REFRESH_TOKEN, "").orEmpty()
+        return sharedPreferences.getString(KEY_REFRESH_TOKEN, "") ?: ""
     }
 
     fun saveRefreshToken(token: String) {
         sharedPreferences.edit().putString(KEY_REFRESH_TOKEN, token).apply()
     }
 
-    fun clear() {
-        sharedPreferences.edit().clear().apply()
-    }
-
-    private var onLogoutCallback: (() -> Unit)? = null
-
-    fun setLogoutCallback(callback: () -> Unit) {
-        onLogoutCallback = callback
+    fun clearAllTokens() {
+        sharedPreferences.edit()
+            .remove(KEY_ACCESS_TOKEN)
+            .remove(KEY_REFRESH_TOKEN)
+            .apply()
     }
 
     fun triggerLogout() {
-        onLogoutCallback?.invoke()
+        scope.launch {
+            clearAllTokens() // 로그아웃 시 토큰도 삭제
+            _logoutEvent.emit(Unit)
+        }
     }
-
-    fun savePreSignupToken(token: String) {
-        sharedPreferences.edit().putString("PRE_SIGNUP_TOKEN", token).apply()
-    }
-
-    fun getPreSignupToken(): String {
-        return sharedPreferences.getString("PRE_SIGNUP_TOKEN", "").orEmpty()
-    }
-
-    fun saveUserInformation(userInformation: UserInformationAuth) {
-        val json = Gson().toJson(userInformation)
-        sharedPreferences.edit().putString("USER_INFORMATION", json).apply()
-    }
-
-//    fun getUserInformation(): UserInformationAuth? {
-//        val json = sharedPreferences.getString("USER_INFORMATION", null)
-//        return if (json != null) Gson().fromJson(json, UserInformationAuth::class.java) else null
-//    }
 }

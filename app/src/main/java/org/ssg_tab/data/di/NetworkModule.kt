@@ -13,6 +13,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
+import org.ssg_tab.core.network.TokenManager
+import org.ssg_tab.data.remote.AuthInterceptor
 import org.ssg_tab.data.service.OnboardingService
 import org.ssg_tab.data.service.home.HomeFeedService
 import org.ssg_tab.data.service.quiz.QuizService
@@ -39,12 +41,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor {
+        return AuthInterceptor(tokenManager)
+    }
+
+    @Provides
+    @Singleton
     fun providesOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor // AuthInterceptor 주입받기
     ): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
+        .addInterceptor(authInterceptor) // AuthInterceptor 추가
         .build()
 
     @Provides

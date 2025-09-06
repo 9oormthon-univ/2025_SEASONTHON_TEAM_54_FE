@@ -28,7 +28,7 @@ fun NavGraphBuilder.loginNavigation(
         LoginScreen(
             modifier = Modifier,
             // onLoginSuccess > SelectCategoryScreen으로 이동
-            onLoginSuccess = { needSignUp ->
+            onLoginSuccess = {
                 navController.navigateToSelectCategory(
                     navOptions = navOptions {
                         popUpTo(Login) {
