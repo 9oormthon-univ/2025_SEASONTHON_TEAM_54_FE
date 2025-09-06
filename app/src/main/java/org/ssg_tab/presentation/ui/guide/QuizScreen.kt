@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
-import org.ssg_tab.domain.model.entity.QuizEntity
+import org.ssg_tab.domain.model.entity.quiz.QuizEntity
 import org.ssg_tab.presentation.ui.guide.model.QuizViewModel
 
 data class QuizData(

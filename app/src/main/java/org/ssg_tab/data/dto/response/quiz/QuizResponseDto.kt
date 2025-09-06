@@ -2,7 +2,7 @@ package org.ssg_tab.data.dto.response.quiz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.ssg_tab.domain.model.entity.QuizEntity
+import org.ssg_tab.domain.model.entity.quiz.QuizEntity
 
 @Serializable
 data class QuizListResponseDto(
