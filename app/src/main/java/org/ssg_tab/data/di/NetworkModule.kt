@@ -21,6 +21,7 @@ import org.ssg_tab.data.service.home.HomeLikeService
 import org.ssg_tab.data.service.quiz.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
 import org.ssg_tab.data.service.quiz.QuizCompleteService
+import org.ssg_tab.data.service.storage.StorageService
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -122,5 +123,11 @@ object NetworkModule {
     @Singleton
     fun provdieHomeLikeeService(retrofit: Retrofit): HomeLikeService {
         return retrofit.create(HomeLikeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieStorageService(retrofit: Retrofit): StorageService {
+        return retrofit.create(StorageService::class.java)
     }
 }
