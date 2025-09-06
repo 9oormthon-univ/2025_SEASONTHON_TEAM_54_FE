@@ -1,7 +1,7 @@
 package org.ssg_tab.data.service
 
 import org.ssg_tab.data.dto.request.OnboardingRequestDto
-import org.ssg_tab.data.dto.response.BaseResponse
+import org.ssg_tab.data.dto.response.base.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

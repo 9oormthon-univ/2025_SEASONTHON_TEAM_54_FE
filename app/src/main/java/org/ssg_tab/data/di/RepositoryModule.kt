@@ -41,6 +41,9 @@ interface RepositoryModule {
     abstract fun bindOnboardingRepository(
         onboardingRepositoryImpl: OnboardingRepositoryImpl
     ): OnboardingRepository
+
+    @Binds
+    @Singleton
     abstract fun bindHomeRepository(
         homeFeedRepositoryImpl: HomeFeedRepositoryImpl,
     ): HomeFeedRepository
