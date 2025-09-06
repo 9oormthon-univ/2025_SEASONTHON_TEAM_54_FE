@@ -78,7 +78,7 @@ fun HomeActionButton(
             } else {
                 Icon(
                     imageVector = ImageVector.vectorResource(
-                        if (isLiked) R.drawable.ic_home_like_o else R.drawable.ic_home_like_off
+                        if (isLiked) R.drawable.ic_home_like_on else R.drawable.ic_home_like_off
                     ),
                     contentDescription = if (isLiked) "좋아요 취소" else "좋아요",
                     tint = Color.Unspecified,

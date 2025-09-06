@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeLikeRequestDto (
-    @SerialName ("conteentsId")
-    val contentsId: Int,
+    @SerialName ("contentsId")
+    val contentsId: Long,
 )
