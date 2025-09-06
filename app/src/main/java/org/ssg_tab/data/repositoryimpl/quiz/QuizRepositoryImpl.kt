@@ -1,8 +1,8 @@
 package org.ssg_tab.data.repositoryimpl.quiz
 
 import org.ssg_tab.data.dto.response.quiz.toEntity
-import org.ssg_tab.data.remote.datasourceImpl.QuizDataSourceImpl
-import org.ssg_tab.domain.model.entity.QuizEntity
+import org.ssg_tab.data.remote.datasourceImpl.quiz.QuizDataSourceImpl
+import org.ssg_tab.domain.model.entity.quiz.QuizEntity
 import org.ssg_tab.domain.repository.quiz.QuizRepository
 import javax.inject.Inject
 

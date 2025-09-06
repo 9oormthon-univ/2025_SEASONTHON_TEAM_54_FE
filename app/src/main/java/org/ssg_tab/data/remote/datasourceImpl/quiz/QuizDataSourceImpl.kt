@@ -1,9 +1,9 @@
-package org.ssg_tab.data.remote.datasourceImpl
+package org.ssg_tab.data.remote.datasourceImpl.quiz
 
-import org.ssg_tab.data.dto.response.BaseResponse
+import org.ssg_tab.data.dto.response.base.BaseResponse
 import org.ssg_tab.data.dto.response.quiz.QuizListResponseDto
-import org.ssg_tab.data.remote.datasource.QuizDataSource
-import org.ssg_tab.data.service.QuizService
+import org.ssg_tab.data.remote.datasource.quiz.QuizDataSource
+import org.ssg_tab.data.service.quiz.QuizService
 import javax.inject.Inject
 
 class QuizDataSourceImpl @Inject constructor(
