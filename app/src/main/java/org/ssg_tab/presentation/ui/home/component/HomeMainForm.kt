@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -46,12 +47,12 @@ import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import kotlin.math.abs
 
 data class NewsItem(
-    val id: Int,
+    val id: Long, // Int에서 Long으로 변경
     val title: String,
     val content: String,
     val category: String,
     val source: String,
-    val imageUrl: String,
+    val imageUrl: String
 )
 
 @Preview(showBackground = true)
@@ -112,6 +113,7 @@ fun HomeMainForm(
     newsItems: List<NewsItem>,
     navController: NavController,
     modifier: Modifier = Modifier,
+    onCurrentItemChanged: (Int) -> Unit = {}
 ) {
     val density = LocalDensity.current
 
@@ -134,6 +136,9 @@ fun HomeMainForm(
             }
         }
     )
+    LaunchedEffect(currentIndex) {
+        onCurrentItemChanged(currentIndex)
+    }
 
     val getCurrentCard = { index: Int ->
         if (newsItems.isEmpty()) null

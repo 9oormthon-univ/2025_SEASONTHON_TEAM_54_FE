@@ -9,6 +9,6 @@ data class HomeContract(
     val homeFeed: HomeFeedEntity? = null,
     val isLoading: Boolean = false,
     val error: String? = null,
-    val likedContentIds: Set<Int> = emptySet(),
-    val isLikingContent: Set<Int> = emptySet()
+    val likedContentIds: Set<Long> = emptySet(),  // Int -> Long
+    val isLikingContent: Set<Long> = emptySet(),  // Int -> Long
 )

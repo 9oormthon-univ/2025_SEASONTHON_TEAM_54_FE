@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(
                 size = 5,
                 categoryId = 1
             ).onSuccess { homeFeed ->
-                Log.d(TAG, "Home feed loaded successfully")
+
                 _state.value = _state.value.copy(
                     homeFeed = homeFeed,
                     isLoading = false,
@@ -51,16 +51,25 @@ class HomeViewModel @Inject constructor(
                 )
             }.onFailure { exception ->
                 Log.e(TAG, "Home feed loading failed", exception)
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = exception.message ?: "홈 피드를 불러오는데 실패했습니다."
-                )
+
+                if (exception.message?.contains("500") == true ||
+                    exception.message?.contains("not found") == true
+                ) {
+                    Log.w(TAG, "Server error, using mock data")
+
+                } else {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        error = exception.message ?: "홈 피드를 불러오는데 실패했습니다."
+                    )
+                }
             }
         }
     }
 
 
-    fun toggleLike(contentId: Int) {
+
+    fun toggleLike(contentId: Long) {
         Log.d(TAG, "toggleLike() called with contentId: $contentId")
 
         val currentState = _state.value
@@ -86,7 +95,10 @@ class HomeViewModel @Inject constructor(
                 isLikingContent = updatedProcessingIds
             )
 
-            Log.d(TAG, "UI updated optimistically - contentId: $contentId, liked: ${!isCurrentlyLiked}")
+            Log.d(
+                TAG,
+                "UI updated optimistically - contentId: $contentId, liked: ${!isCurrentlyLiked}"
+            )
 
             try {
                 val request = HomeLikeRequestDto(contentsId = contentId)
@@ -128,11 +140,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun isContentLiked(contentId: Int): Boolean {
+    fun isContentLiked(contentId: Long): Boolean {
         return _state.value.likedContentIds.contains(contentId)
     }
 
-    fun isContentBeingLiked(contentId: Int): Boolean {
+    fun isContentBeingLiked(contentId: Long): Boolean {
         return _state.value.isLikingContent.contains(contentId)
     }
 

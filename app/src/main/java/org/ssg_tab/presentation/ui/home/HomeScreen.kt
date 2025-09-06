@@ -56,6 +56,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    var currentItemIndex by remember { mutableStateOf(0) }
     var searchText by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
     val nestedScrollConnection = remember {
@@ -80,7 +81,7 @@ fun HomeScreen(
 
         else -> {
             val newsItems = state.homeFeed?.toNewsItemList() ?: getDefaultNewsItems()
-            val currentContentId = newsItems.firstOrNull()?.id ?: -1
+            val currentContentId = newsItems.getOrNull(currentItemIndex)?.id ?: -1L
 
             Column(
                 modifier = modifier
@@ -96,7 +97,11 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .weight(1f),
-                    navController = navController
+                    navController = navController,
+                    onCurrentItemChanged = { index ->
+                        currentItemIndex = index
+                        Log.d("HomeScreen", "Current item changed to index: $index, contentId: ${newsItems.getOrNull(index)?.id}")
+                    }
                 )
 
                 HomeActionButton(
@@ -104,14 +109,15 @@ fun HomeScreen(
                         Log.d("HomeScreen", "Share clicked for content: $currentContentId")
                     },
                     onLikeClick = {
-                        if (currentContentId != -1) {
+                        if (currentContentId != -1L) {
+                            Log.d("HomeScreen", "Like clicked for content: $currentContentId")
                             viewModel.toggleLike(currentContentId)
                         }
                     },
-                    isLiked = if (currentContentId != -1) {
+                    isLiked = if (currentContentId != -1L) {
                         viewModel.isContentLiked(currentContentId)
                     } else false,
-                    isLiking = if (currentContentId != -1) {
+                    isLiking = if (currentContentId != -1L) {
                         viewModel.isContentBeingLiked(currentContentId)
                     } else false
                 )
