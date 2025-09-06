@@ -32,7 +32,7 @@ fun SelectableChip(
             .border(1.dp, borderColor, RoundedCornerShape(20.dp))
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 10.dp),
-    contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
