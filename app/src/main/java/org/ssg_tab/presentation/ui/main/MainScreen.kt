@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kotlinx.collections.immutable.toImmutableList
-import org.ssg_tab.presentation.ui.login.navigation.Login
+import org.ssg_tab.presentation.ui.login.navigation.Tutorial
 import org.ssg_tab.presentation.ui.main.component.MainBottomBar
 
 @Composable
@@ -43,7 +43,7 @@ private fun MainScreenContent(
             Box(modifier = Modifier.fillMaxSize()) {
                 SSGNavHost(
                     navigator = navigator,
-                    startDestination = Login,
+                    startDestination = Tutorial,
                     paddingValues = padding,
                     snackbarHostState = snackBarHostState,
                     modifier = Modifier.padding(padding)

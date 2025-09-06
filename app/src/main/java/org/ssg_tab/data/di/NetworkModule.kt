@@ -56,6 +56,7 @@ object NetworkModule {
         .readTimeout(10, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor) // ← 이게 빠져있었음
         .build()
+
     @Provides
     @Singleton
     fun provideJson(): Json {
@@ -103,7 +104,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provdieOnboardingService(retrofit: Retrofit): OnboardingService{
+    fun provdieOnboardingService(retrofit: Retrofit): OnboardingService {
         return retrofit.create(OnboardingService::class.java)
     }
 
@@ -129,16 +130,16 @@ object NetworkModule {
     @Singleton
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
-        
+    }
+
     @Provides
-    @Singleton
     fun provdieStorageService(retrofit: Retrofit): StorageService {
         return retrofit.create(StorageService::class.java)
     }
 
     @Provides
-    @Singleton
     fun provdieStudyService(retrofit: Retrofit): StudyService {
         return retrofit.create(StudyService::class.java)
     }
+
 }
