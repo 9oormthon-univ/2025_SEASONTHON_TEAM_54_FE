@@ -1,4 +1,4 @@
-package org.ssg_tab.data.dto.response
+package org.ssg_tab.data.dto.response.base
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

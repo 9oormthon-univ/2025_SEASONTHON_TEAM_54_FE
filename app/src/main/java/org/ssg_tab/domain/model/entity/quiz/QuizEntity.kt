@@ -1,4 +1,4 @@
-package org.ssg_tab.domain.model.entity
+package org.ssg_tab.domain.model.entity.quiz
 
 data class QuizEntity(
     val id: Int,
