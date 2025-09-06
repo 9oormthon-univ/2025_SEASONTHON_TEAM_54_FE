@@ -3,7 +3,7 @@ package org.ssg_tab.presentation.ui.userinformation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -13,9 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
@@ -31,14 +29,28 @@ fun SelectCategoryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    val interests = listOf(
+    val categoryTexts = listOf(
         "주식", "취업", "부동산", "청약", "암호화폐", "해외투자", "금융", "펀드", "경제상식"
+    )
+
+    val categoryIcons = listOf(
+        R.drawable.ic_category_stock,
+        R.drawable.ic_category_job,
+        R.drawable.ic_category_real,
+        R.drawable.ic_category_sub,
+        R.drawable.ic_category_cryptocurrency,
+        R.drawable.ic_category_for,
+        R.drawable.ic_category_fianace,
+        R.drawable.ic_category_fund,
+        R.drawable.ic_category_eco
+
     )
 
     val isButtonEnabled = uiState.selectedInterests.size in 3..5
 
     SelectCategoryScreenContent(
-        interests = interests,
+        categoryTexts = categoryTexts,
+        categoryIcons = categoryIcons,
         selectedInterests = uiState.selectedInterests,
         isButtonEnabled = isButtonEnabled,
         onInterestClick = viewModel::selectInterest,
@@ -48,7 +60,8 @@ fun SelectCategoryScreen(
 
 @Composable
 fun SelectCategoryScreenContent(
-    interests: List<String>,
+    categoryTexts: List<String>,
+    categoryIcons: List<Int>,
     selectedInterests: Set<String>,
     isButtonEnabled: Boolean,
     onInterestClick: (String) -> Unit,
@@ -103,11 +116,12 @@ fun SelectCategoryScreenContent(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(interests) { interest ->
+                itemsIndexed(categoryTexts) { index, text ->
                     InterestChip(
-                        text = interest,
-                        isSelected = selectedInterests.contains(interest),
-                        onClick = { onInterestClick(interest) }
+                        text = text,
+                        iconResId = categoryIcons[index],
+                        isSelected = selectedInterests.contains(text),
+                        onClick = { onInterestClick(text) }
                     )
                 }
             }
@@ -122,33 +136,5 @@ fun SelectCategoryScreenContent(
             )
             Spacer(modifier = Modifier.height(40.dp))
         }
-    }
-}
-
-
-@Preview(showBackground = true, name = "Initial State")
-@Composable
-private fun SelectCategoryScreen_Initial_Preview() {
-    SsgTabTheme {
-        SelectCategoryScreen(
-            viewModel = viewModel(),
-            onNextClick = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Selected State")
-@Composable
-private fun SelectCategoryScreen_Selected_Preview() {
-    SsgTabTheme {
-        SelectCategoryScreenContent(
-            interests = listOf(
-                "주식", "취업", "부동산", "청약", "암호화폐", "해외투자", "금융", "펀드", "경제상식"
-            ),
-            selectedInterests = setOf("주식", "취업", "청약"),
-            isButtonEnabled = true,
-            onInterestClick = {},
-            onNextClick = {}
-        )
     }
 }

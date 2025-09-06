@@ -1,10 +1,11 @@
 package org.ssg_tab.presentation.ui.mypage.component
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,12 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 
 @Composable
 fun InterestChip(
     text: String,
+    @DrawableRes iconResId: Int,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -38,16 +42,16 @@ fun InterestChip(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .size(60.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(SsgTabTheme.colors.White.copy(alpha = 0.5f))
+        Image(
+            painter = painterResource(id = iconResId),
+            contentDescription = text,
+            modifier = Modifier.size(60.dp)
         )
 
         Text(
             text = text,
-            style = SsgTabTheme.typography.Small_Sb.copy(color = textColor)
+            style = SsgTabTheme.typography.Small_Sb.copy(color = textColor),
+            textAlign = TextAlign.Center
         )
     }
 }
