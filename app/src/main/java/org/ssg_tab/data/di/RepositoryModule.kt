@@ -7,10 +7,12 @@ import dagger.hilt.components.SingletonComponent
 import org.ssg_tab.data.repositoryimpl.DummyRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.home.HomeFeedRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.login.AuthRepositoryImpl
+import org.ssg_tab.data.repositoryimpl.quiz.QuizCompleteRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.quiz.QuizRepositoryImpl
 import org.ssg_tab.domain.repository.DummyRepository
 import org.ssg_tab.domain.repository.home.HomeFeedRepository
 import org.ssg_tab.domain.repository.login.AuthRepository
+import org.ssg_tab.domain.repository.quiz.QuizCompleteRepository
 import org.ssg_tab.domain.repository.quiz.QuizRepository
 
 @Module
@@ -35,6 +37,11 @@ interface RepositoryModule {
     abstract fun bindHomeRepository(
         homeFeedRepositoryImpl: HomeFeedRepositoryImpl,
     ): HomeFeedRepository
+
+    @Binds
+    abstract fun bindQuizCompleteRepository(
+        quizCompleteRepositoryImpl: QuizCompleteRepositoryImpl
+    ): QuizCompleteRepository
 
 
 }
