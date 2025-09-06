@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,7 +17,6 @@ import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import org.ssg_tab.presentation.ui.mypage.component.MenuListItem
 import org.ssg_tab.presentation.ui.mypage.component.UserProfileCard
 import org.ssg_tab.presentation.ui.mypage.model.MyPageViewModel
-
 
 @Composable
 fun MypageScreen(
@@ -28,7 +28,6 @@ fun MypageScreen(
 
     Scaffold(
         containerColor = SsgTabTheme.colors.White,
-
         topBar = {
             SsgTabTopBar(
                 leftIcon = R.drawable.ic_bottomnav_mypage_off,
@@ -43,17 +42,43 @@ fun MypageScreen(
                 .padding(all = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            } else if (uiState.userInfo != null) {
-                UserProfileCard(
-                    name = uiState.userInfo!!.name,
-                    level = uiState.userInfo!!.level,
-                    // imageUrl = uiState.userInfo!!.profileImageUrl,
-                    onEditClick = { /* TODO: 편집 버튼 클릭 로직 */ }
-                )
-            } else {
-                Text(text = uiState.error ?: "사용자 정보를 불러오는데 실패했습니다.")
+            when {
+                uiState.isLoading -> {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+//                uiState.error != null -> {
+//                    Column(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        horizontalAlignment = Alignment.CenterHorizontally
+//                    ) {
+//                        Text(
+//                            text = uiState.error,
+//                            textAlign = TextAlign.Center,
+//                            color = SsgTabTheme.colors.Error
+//                        )
+//                        Spacer(modifier = Modifier.height(8.dp))
+//                        Button(onClick = { viewModel.retry() }) {
+//                            Text("다시 시도")
+//                        }
+//                    }
+//                }
+
+                uiState.userInfo != null -> {
+                    uiState.userInfo?.let { userInfo ->
+                        UserProfileCard(
+                            name = userInfo.name,
+                            level = userInfo.level,
+                            imageUrl = userInfo.profileImageUrl,
+                            onEditClick = { /* TODO: 편집 버튼 클릭 로직 */ }
+                        )
+                    }
+                }
             }
 
             MenuListItem(
@@ -72,7 +97,6 @@ fun MypageScreen(
     }
 }
 
-// 미리보기
 @Preview(showBackground = true)
 @Composable
 private fun MyPageScreenPreview() {
