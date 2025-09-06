@@ -133,15 +133,13 @@ object NetworkModule {
     }
 
     @Provides
-    @Singleton
     fun provdieStorageService(retrofit: Retrofit): StorageService {
         return retrofit.create(StorageService::class.java)
     }
 
     @Provides
-    @Singleton
     fun provdieStudyService(retrofit: Retrofit): StudyService {
         return retrofit.create(StudyService::class.java)
     }
-}
 
+}

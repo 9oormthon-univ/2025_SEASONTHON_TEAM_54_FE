@@ -83,4 +83,7 @@ dependencies {
     implementation(libs.kakao.v2.all)
 
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.foundation)
+
 }
