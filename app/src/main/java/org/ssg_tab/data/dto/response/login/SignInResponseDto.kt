@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SignInResponseDto(
+    @SerialName("step")
+    val step: String,
     @SerialName("accessToken")
     val accessToken: String,
     @SerialName("refreshToken")
@@ -13,10 +15,17 @@ data class SignInResponseDto(
 
 @Serializable
 data class UserInformationDto(
-    @SerialName("email")
-    val email: String,
-    @SerialName("nickname")
-    val nickname: String,
-    @SerialName("profileImageUrl")
-    val profileImageUrl: String
+    @SerialName("step")
+    val step: String,
+    @SerialName("accessToken")
+    val accessToken: String,
+    @SerialName("refreshToken")
+    val refreshToken: String,
+)
+
+
+fun SignInResponseDto.toEntity(): SignInResponseDto = SignInResponseDto(
+    step = this.step,
+    accessToken = this.accessToken,
+    refreshToken = this.refreshToken
 )

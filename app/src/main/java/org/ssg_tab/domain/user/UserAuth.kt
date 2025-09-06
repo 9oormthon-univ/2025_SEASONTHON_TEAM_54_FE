@@ -1,6 +1,7 @@
 package org.ssg_tab.domain.user
 
 data class UserAuth(
+    val step: String,
     val accessToken: String,
     val refreshToken: String
 )
@@ -12,9 +13,9 @@ data class SignUpResult(
 )
 
 data class UserInformationAuth(
-    val email: String,
-    val nickname: String,
-    val profileImageUrl: String
+    val step : String,
+    val accessToken: String,
+    val refreshToken: String
 )
 
 data class JwtResponse(
