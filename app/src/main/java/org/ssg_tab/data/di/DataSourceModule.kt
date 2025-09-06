@@ -5,9 +5,12 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.ssg_tab.data.remote.datasource.AuthRemoteDataSource
-import org.ssg_tab.data.remote.datasource.QuizDataSource
+import org.ssg_tab.data.remote.datasource.home.HomeFeedDataSource
+import org.ssg_tab.data.remote.datasource.quiz.QuizCompleteDataSource
+import org.ssg_tab.data.remote.datasource.quiz.QuizDataSource
 import org.ssg_tab.data.remote.datasourceImpl.AuthRemoteDataSourceImpl
-import org.ssg_tab.data.remote.datasourceImpl.QuizDataSourceImpl
+import org.ssg_tab.data.remote.datasourceImpl.home.HomeFeedDataSourceImpl
+import org.ssg_tab.data.remote.datasourceImpl.quiz.QuizDataSourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,4 +24,14 @@ interface DataSourceModule {
     abstract fun bindQuizRemoteDataSource(
         quizRemoteDataSourceImpl: QuizDataSourceImpl
     ): QuizDataSource
+
+    @Binds
+    abstract fun bindHomeRemoteDataSource(
+        homeRemoteDataSourceImpl: HomeFeedDataSourceImpl
+    ): HomeFeedDataSource
+
+    @Binds
+    abstract fun bindQuizCompleteRemoteDataSource(
+        quizCompleteDataSource: QuizCompleteDataSource
+    ): QuizCompleteDataSource
 }

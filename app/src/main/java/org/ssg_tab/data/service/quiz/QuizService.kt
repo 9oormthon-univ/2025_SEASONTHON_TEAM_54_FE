@@ -1,6 +1,6 @@
-package org.ssg_tab.data.service
+package org.ssg_tab.data.service.quiz
 
-import org.ssg_tab.data.dto.response.BaseResponse
+import org.ssg_tab.data.dto.response.base.BaseResponse
 import org.ssg_tab.data.dto.response.quiz.QuizListResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query

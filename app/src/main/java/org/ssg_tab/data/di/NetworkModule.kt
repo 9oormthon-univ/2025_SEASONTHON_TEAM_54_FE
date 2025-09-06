@@ -15,7 +15,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
 import org.ssg_tab.data.service.OnboardingService
 import org.ssg_tab.data.service.QuizService
+import org.ssg_tab.data.service.home.HomeFeedService
+import org.ssg_tab.data.service.quiz.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
+import org.ssg_tab.data.service.quiz.QuizCompleteService
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -76,7 +79,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provdieQuizService(retrofit: Retrofit): QuizService{
+    fun provdieQuizService(retrofit: Retrofit): QuizService {
         return retrofit.create(QuizService::class.java)
     }
 
@@ -86,4 +89,13 @@ object NetworkModule {
         return retrofit.create(OnboardingService::class.java)
     }
 
+    fun provdieHomeService(retrofit: Retrofit): HomeFeedService {
+        return retrofit.create(HomeFeedService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieQuizCompleteService(retrofit: Retrofit): QuizCompleteService {
+        return retrofit.create(QuizCompleteService::class.java)
+    }
 }
