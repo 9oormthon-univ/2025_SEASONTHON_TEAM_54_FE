@@ -22,6 +22,11 @@ class StorageViewModel @Inject constructor(
         fetchStorage()
     }
 
+    fun refreshData() {
+        val currentCategoryId = getCategoryId(_state.value.selectedCategory)
+        fetchStorage(currentCategoryId)
+    }
+
     fun fetchStorage(categoryId: Long = 1) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null)

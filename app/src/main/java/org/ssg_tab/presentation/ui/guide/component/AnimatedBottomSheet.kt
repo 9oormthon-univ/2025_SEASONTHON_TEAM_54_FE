@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,6 +49,8 @@ private fun PreviewAnimatedBottomSheet() {
 
             AnimatedBottomSheet(
                 title = "위로 끌어올려\n다음 퀴즈 풀기",
+                isExpanded = false,
+                onExpandedChange = {},
                 expandedContent = {
                     Column(
                         modifier = Modifier
@@ -79,13 +81,18 @@ fun AnimatedBottomSheet(
     title: String,
     expandedContent: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    isExpanded: Boolean = false,
+    onExpandedChange: (Boolean) -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
     val screenHeight = with(density) { configuration.screenHeightDp.dp.toPx() }
 
     var offsetY by remember { mutableFloatStateOf(0f) }
-    var isExpanded by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isExpanded) {
+        offsetY = 0f
+    }
 
     val animatedOffsetY by animateFloatAsState(
         targetValue = if (isExpanded) -screenHeight * 0f else 0f,
@@ -97,13 +104,13 @@ fun AnimatedBottomSheet(
     )
 
     val animatedAlpha by animateFloatAsState(
-        targetValue = if (isExpanded) 0.5f else 0f,
+        targetValue = if (isExpanded) 1f else 0f,
         animationSpec = tween(300),
         label = "expandedContentAlpha"
     )
 
     val collapsedAlpha by animateFloatAsState(
-        targetValue = if (isExpanded) 0f else 0.5f,
+        targetValue = if (isExpanded) 0f else 1f,
         animationSpec = tween(300),
         label = "collapsedContentAlpha"
     )
@@ -120,9 +127,9 @@ fun AnimatedBottomSheet(
                     onDragEnd = {
                         val threshold = -screenHeight * 0.3f
                         if (offsetY < threshold) {
-                            isExpanded = true
+                            onExpandedChange(true)
                         } else {
-                            isExpanded = false
+                            onExpandedChange(false)
                         }
                         offsetY = 0f
                     }

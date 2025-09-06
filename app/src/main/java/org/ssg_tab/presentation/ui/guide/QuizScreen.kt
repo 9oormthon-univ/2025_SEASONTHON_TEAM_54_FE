@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -29,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -76,10 +76,15 @@ private fun PreviewQuizScreen() {
 @Composable
 fun QuizScreenWithViewModel(
     onBackPressed: () -> Unit,
+    onQuizCompleted: () -> Unit = {}, // 퀴즈 완료 콜백 추가
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.setOnQuizCompletedCallback(onQuizCompleted)
+    }
 
     when {
         state.isLoading -> {
@@ -373,19 +378,19 @@ private fun QuizContent(
             }
 
             // 제출 중 오버레이
-            if (isSubmittingAnswer) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = Color(0xFF42A5F5),
-                        modifier = Modifier.size(40.dp)
-                    )
-                }
-            }
+//            if (isSubmittingAnswer) {
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .background(Color.Black.copy(alpha = 0.3f)),
+//                    contentAlignment = Alignment.Center
+//                ) {
+//                    CircularProgressIndicator(
+//                        color = Color(0xFF42A5F5),
+//                        modifier = Modifier.size(40.dp)
+//                    )
+//                }
+//            }
         }
 
         Spacer(modifier = Modifier.height(32.dp))

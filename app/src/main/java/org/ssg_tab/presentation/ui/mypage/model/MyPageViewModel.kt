@@ -1,6 +1,5 @@
 package org.ssg_tab.presentation.ui.mypage.model
 
-import org.ssg_tab.domain.model.entity.UserInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.ssg_tab.domain.model.entity.UserInfo
 import org.ssg_tab.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun fetchUserInfo() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = null) }
             userRepository.getUserInfo()
                 .onSuccess { userInfo ->
                     _uiState.update { it.copy(isLoading = false, userInfo = userInfo) }
@@ -40,5 +40,9 @@ class MyPageViewModel @Inject constructor(
                     _uiState.update { it.copy(isLoading = false, error = error.message) }
                 }
         }
+    }
+
+    fun retry() {
+        fetchUserInfo()
     }
 }

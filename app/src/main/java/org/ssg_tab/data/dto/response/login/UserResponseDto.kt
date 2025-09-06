@@ -3,6 +3,7 @@ package org.ssg_tab.data.dto.response.login
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.ssg_tab.data.dto.response.base.BaseResponse
+import org.ssg_tab.domain.model.entity.UserInfo
 
 @Serializable
 data class UserInfoResultDto(

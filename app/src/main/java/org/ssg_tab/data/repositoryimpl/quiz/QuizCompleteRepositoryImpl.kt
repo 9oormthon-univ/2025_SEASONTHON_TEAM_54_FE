@@ -7,9 +7,14 @@ import javax.inject.Inject
 
 class QuizCompleteRepositoryImpl @Inject constructor(
     private val quizCompleteDataSourceImpl: QuizCompleteDataSourceImpl
-): QuizCompleteRepository {
-    override suspend fun completeQuiz(quizCompleteRequestDto:QuizCompleteRequestDto): Result<Unit> =
+) : QuizCompleteRepository {
+    override suspend fun completeQuiz(quizCompleteRequestDto: QuizCompleteRequestDto): Result<Unit> =
         runCatching {
-            quizCompleteDataSourceImpl.completeQuiz(quizCompleteRequestDto)
+            val response = quizCompleteDataSourceImpl.completeQuiz(quizCompleteRequestDto)
+            if (response.isSuccess) {
+                Unit
+            } else {
+                throw Exception(response.message ?: "퀴즈 완료 처리에 실패했습니다.")
+            }
         }
 }
