@@ -13,9 +13,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
-import org.ssg_tab.core.network.TokenManager
-import org.ssg_tab.data.remote.AuthInterceptor
 import org.ssg_tab.data.service.OnboardingService
+import org.ssg_tab.data.service.UserService
 import org.ssg_tab.data.service.home.HomeFeedService
 import org.ssg_tab.data.service.home.HomeLikeService
 import org.ssg_tab.data.service.quiz.QuizService
@@ -126,6 +125,11 @@ object NetworkModule {
         return retrofit.create(HomeLikeService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+        
     @Provides
     @Singleton
     fun provdieStorageService(retrofit: Retrofit): StorageService {

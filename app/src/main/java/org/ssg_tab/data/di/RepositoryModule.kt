@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.ssg_tab.data.repositoryimpl.DummyRepositoryImpl
+import org.ssg_tab.data.repositoryimpl.UserRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.home.HomeFeedRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.home.HomeLikeRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.login.AuthRepositoryImpl
@@ -14,6 +15,7 @@ import org.ssg_tab.data.repositoryimpl.quiz.QuizRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.storage.StorageRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.study.StudyRepositoryImpl
 import org.ssg_tab.domain.repository.DummyRepository
+import org.ssg_tab.domain.repository.UserRepository
 import org.ssg_tab.domain.repository.home.HomeFeedRepository
 import org.ssg_tab.domain.repository.home.HomeLikeRepository
 import org.ssg_tab.domain.repository.login.AuthRepository
@@ -65,7 +67,13 @@ interface RepositoryModule {
     ): HomeLikeRepository
 
     @Binds
-    abstract fun bindStorageRepository(
+    @Singleton
+    abstract fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
+  
+    @Binds
+  abstract fun bindStorageRepository(
         storageRepositoryImpl: StorageRepositoryImpl
     ): StorageRepository
 
