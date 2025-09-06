@@ -14,9 +14,11 @@ class QuizRepositoryImpl @Inject constructor(
         difficulty: String,
     ): Result<List<QuizEntity>> =
         runCatching {
-            quizDataSourceImpl.getQuizList(
-                categoryId,
-                difficulty
-            ).result.quizList.map { it.toEntity() }
+            val response = quizDataSourceImpl.getQuizList(categoryId, difficulty)
+            if (response.isSuccess && response.result != null) {
+                response.result.quizList.map { it.toEntity() }
+            } else {
+                throw Exception(response.message ?: "퀴즈 데이터를 불러오는데 실패했습니다.")
+            }
         }
 }

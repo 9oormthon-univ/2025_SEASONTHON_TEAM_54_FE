@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
@@ -54,7 +56,8 @@ fun StorageGridItem(
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = imageUrl,
-                contentDescription = ""
+                contentDescription = "",
+                contentScale = ContentScale.Crop
             )
         }
         Text(
@@ -63,7 +66,9 @@ fun StorageGridItem(
                 .padding(top = 13.dp),
             text = title,
             color = SsgTabTheme.colors.White,
-            style = SsgTabTheme.typography.Small_Sb
+            style = SsgTabTheme.typography.Small_Sb.copy(
+                fontSize = 8.sp
+            )
         )
         Icon(
             modifier = Modifier

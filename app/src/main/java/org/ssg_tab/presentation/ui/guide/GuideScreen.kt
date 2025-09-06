@@ -17,6 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,6 +51,8 @@ fun GuideScreen(
     viewModel: GuideViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    var isBottomSheetExpanded by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -56,6 +61,13 @@ fun GuideScreen(
         when {
             state.isLoading -> {
                 LoadingScreen()
+            }
+
+            state.error != null -> {
+                ErrorScreen(
+                    error = state.error!!,
+                    onRetry = { viewModel.retry() }
+                )
             }
 
             else -> {
@@ -98,7 +110,7 @@ fun GuideScreen(
                         Spacer(modifier = Modifier.width(32.dp))
 
                         GuideRankCard(
-                            rankTitle = "독서왕"
+                            rankTitle = "학습왕"
                         )
                     }
 
@@ -129,8 +141,18 @@ fun GuideScreen(
 
                 AnimatedBottomSheet(
                     title = "위로 끌어올려\n다음 퀴즈 풀기",
+                    isExpanded = isBottomSheetExpanded,
+                    onExpandedChange = { isBottomSheetExpanded = it },
                     expandedContent = {
-                        // QuizScreenWithViewModel 구현 필요
+                        QuizScreenWithViewModel(
+                            onBackPressed = {
+                                isBottomSheetExpanded = false
+                            },
+                            onQuizCompleted = {
+                                isBottomSheetExpanded = false
+                                viewModel.fetchLearningData()
+                            }
+                        )
                     },
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -141,6 +163,22 @@ fun GuideScreen(
     }
 }
 
+@Composable
+private fun ErrorScreen(
+    error: String,
+    onRetry: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "오류가 발생했습니다")
+            Text(text = error)
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+}
 
 @Composable
 private fun LoadingScreen() {

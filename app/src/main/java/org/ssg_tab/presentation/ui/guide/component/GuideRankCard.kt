@@ -1,5 +1,6 @@
 package org.ssg_tab.presentation.ui.guide.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,16 +52,16 @@ fun GuideRankCard(
             .size(120.dp)
 
     ) {
-        Icon(
+        Image(
+            painter = painterResource(id=R.drawable.img_study_crown),
+            contentDescription = "왕",
             modifier = Modifier
-                .offset(y = (-52).dp),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_study_my_profile),
-            contentDescription = null,
-            tint = SsgTabTheme.colors.LightGray,
+                .size(65.dp)
+                .offset(y = -12.dp)
         )
         Text(
             modifier = Modifier
-                .offset(y = 12.dp),
+                .offset(y = 24.dp),
             text = rankTitle,
             color = SsgTabTheme.colors.DarkGray,
             style = SsgTabTheme.typography.Regular_Sb,

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.ssg_tab.data.dto.request.quiz.QuizCompleteRequestDto
 import org.ssg_tab.domain.model.entity.quiz.QuizEntity
 import org.ssg_tab.domain.repository.quiz.QuizCompleteRepository
 import org.ssg_tab.domain.repository.quiz.QuizRepository
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     private val quizRepository: QuizRepository,
-    private val quizCompleteRepository: QuizCompleteRepository
+    private val quizCompleteRepository: QuizCompleteRepository,
 ) : ViewModel() {
 
     companion object {
@@ -28,9 +29,16 @@ class QuizViewModel @Inject constructor(
     private val _state = MutableStateFlow(QuizContract())
     val state: StateFlow<QuizContract> = _state.asStateFlow()
 
+    // 퀴즈 완료 콜백
+    private var onQuizCompletedCallback: (() -> Unit)? = null
+
     init {
         Log.d(TAG, "QuizViewModel initialized")
         loadQuizzes()
+    }
+
+    fun setOnQuizCompletedCallback(callback: () -> Unit) {
+        onQuizCompletedCallback = callback
     }
 
     fun loadQuizzes() {
@@ -45,7 +53,10 @@ class QuizViewModel @Inject constructor(
                     .onSuccess { quizList ->
                         Log.d(TAG, "Quiz loading SUCCESS - received ${quizList.size} quizzes")
                         quizList.forEachIndexed { index, quiz ->
-                            Log.d(TAG, "Quiz $index: id=${quiz.id}, question=${quiz.question.take(50)}...")
+                            Log.d(
+                                TAG,
+                                "Quiz $index: id=${quiz.id}, question=${quiz.question.take(50)}..."
+                            )
                         }
                         _state.value = _state.value.copy(
                             quizList = quizList,
@@ -54,7 +65,10 @@ class QuizViewModel @Inject constructor(
                             answeredQuestions = emptySet(),
                             currentQuestionResult = null
                         )
-                        Log.d(TAG, "State updated - isLoading=false, quizList.size=${quizList.size}")
+                        Log.d(
+                            TAG,
+                            "State updated - isLoading=false, quizList.size=${quizList.size}"
+                        )
                     }
                     .onFailure { exception ->
                         Log.e(TAG, "Quiz loading FAILED", exception)
@@ -103,26 +117,32 @@ class QuizViewModel @Inject constructor(
             _state.value = currentState.copy(isSubmittingAnswer = true)
 
             try {
-
                 val isCorrect = answerIndex == currentQuiz.correctAnswerIndex
-                Log.d(TAG, "Answer is ${if (isCorrect) "CORRECT" else "INCORRECT"} - correctIndex=${currentQuiz.correctAnswerIndex}")
-
-                // API 호출 (실제 구현 시 수정 필요)
-                /*
-                val answerSubmitRequest = QuizAnswerSubmitDto(
-                    quizId = currentQuiz.id,
-                    selectedAnswer = answerIndex,
-                    questionIndex = questionIndex
+                Log.d(
+                    TAG,
+                    "Answer is ${if (isCorrect) "CORRECT" else "INCORRECT"} - correctIndex=${currentQuiz.correctAnswerIndex}"
                 )
 
-                quizCompleteRepository.submitAnswer(answerSubmitRequest)
-                    .onSuccess { response ->
-                        Log.d(TAG, "Answer submission successful: ${response.isCorrect}")
+                // 각 문제별 API 호출
+                val quizCompleteRequest = QuizCompleteRequestDto(
+                    quizId = currentQuiz.id
+                )
+
+                quizCompleteRepository.completeQuiz(quizCompleteRequest)
+                    .onSuccess {
+                        Log.d(
+                            TAG,
+                            "Quiz answer submission successful for quizId: ${currentQuiz.id}"
+                        )
                     }
                     .onFailure { exception ->
-                        Log.e(TAG, "Answer submission failed", exception)
+                        Log.e(
+                            TAG,
+                            "Quiz answer submission failed for quizId: ${currentQuiz.id}",
+                            exception
+                        )
+                        // API 실패해도 UI는 계속 진행
                     }
-                */
 
                 delay(500)
 
@@ -139,14 +159,17 @@ class QuizViewModel @Inject constructor(
                     isSubmittingAnswer = false
                 )
 
-                Log.d(TAG, "Answer submitted and result shown - questionIndex=$questionIndex, isCorrect=$isCorrect")
+                Log.d(
+                    TAG,
+                    "Answer submitted and result shown - questionIndex=$questionIndex, isCorrect=$isCorrect"
+                )
 
                 if (questionIndex < currentState.totalQuestions - 1) {
-                    delay(2000)
+                    delay(1500)
                     autoMoveToNextQuestion()
                 } else {
-                    delay(3000)
-                    completeQuiz()
+                    delay(2000)
+                    completeAllQuizzes()
                 }
 
             } catch (e: Exception) {
@@ -155,6 +178,31 @@ class QuizViewModel @Inject constructor(
                     isSubmittingAnswer = false,
                     error = "답안 제출 중 오류가 발생했습니다."
                 )
+            }
+        }
+    }
+
+    private fun completeAllQuizzes() {
+        Log.d(TAG, "completeAllQuizzes() called")
+        viewModelScope.launch {
+            val currentState = _state.value
+            val correctAnswers = currentState.correctAnswers
+            val totalQuestions = currentState.totalQuestions
+            val score = (correctAnswers.toFloat() / totalQuestions * 100).toInt()
+
+            Log.d(
+                TAG,
+                "All quizzes completed - correctAnswers=$correctAnswers out of $totalQuestions (${score}%)"
+            )
+
+            try {
+                delay(1000)
+                onQuizCompletedCallback?.invoke()
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Error completing all quizzes", e)
+                delay(1000)
+                onQuizCompletedCallback?.invoke()
             }
         }
     }
@@ -182,7 +230,10 @@ class QuizViewModel @Inject constructor(
             return
         }
 
-        Log.d(TAG, "Current state - currentQuizIndex=${currentState.currentQuizIndex}, totalQuestions=${currentState.totalQuestions}")
+        Log.d(
+            TAG,
+            "Current state - currentQuizIndex=${currentState.currentQuizIndex}, totalQuestions=${currentState.totalQuestions}"
+        )
 
         if (currentState.currentQuizIndex < currentState.totalQuestions - 1) {
             val newIndex = currentState.currentQuizIndex + 1
@@ -225,27 +276,6 @@ class QuizViewModel @Inject constructor(
         }
     }
 
-    private fun completeQuiz() {
-        Log.d(TAG, "completeQuiz() called")
-        viewModelScope.launch {
-            val currentState = _state.value
-            val correctAnswers = currentState.correctAnswers
-            val totalQuestions = currentState.totalQuestions
-            val score = (correctAnswers.toFloat() / totalQuestions * 100).toInt()
-
-            Log.d(TAG, "Quiz completed - correctAnswers=$correctAnswers out of $totalQuestions (${score}%)")
-
-            try {
-                delay(1000)
-                Log.d(TAG, "Quiz completion API call simulated")
-
-                Log.d(TAG, "Quiz fully completed!")
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Error completing quiz", e)
-            }
-        }
-    }
 
     fun resetQuiz() {
         Log.d(TAG, "resetQuiz() called")

@@ -50,12 +50,13 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor) // ← 이게 빠져있었음
         .build()
+
     @Provides
     @Singleton
     fun provideJson(): Json {
@@ -103,7 +104,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provdieOnboardingService(retrofit: Retrofit): OnboardingService{
+    fun provdieOnboardingService(retrofit: Retrofit): OnboardingService {
         return retrofit.create(OnboardingService::class.java)
     }
 
@@ -129,7 +130,8 @@ object NetworkModule {
     @Singleton
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
-        
+    }
+
     @Provides
     @Singleton
     fun provdieStorageService(retrofit: Retrofit): StorageService {
@@ -142,3 +144,4 @@ object NetworkModule {
         return retrofit.create(StudyService::class.java)
     }
 }
+
