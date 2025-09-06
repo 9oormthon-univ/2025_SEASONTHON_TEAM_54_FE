@@ -13,6 +13,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
+import org.ssg_tab.data.service.OnboardingService
 import org.ssg_tab.data.service.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
 import retrofit2.Converter
@@ -78,4 +79,11 @@ object NetworkModule {
     fun provdieQuizService(retrofit: Retrofit): QuizService{
         return retrofit.create(QuizService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provdieOnboardingService(retrofit: Retrofit): OnboardingService{
+        return retrofit.create(OnboardingService::class.java)
+    }
+
 }
