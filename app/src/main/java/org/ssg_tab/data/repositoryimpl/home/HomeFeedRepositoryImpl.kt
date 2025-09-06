@@ -15,7 +15,14 @@ class HomeFeedRepositoryImpl @Inject constructor(
         categoryId: Int,
     ): Result<HomeFeedEntity> =
         runCatching {
-            homeFeedDataSourceImpl.getHomeFeed(page, size, categoryId).result.toEntity()
+            val response = homeFeedDataSourceImpl.getHomeFeed(page, size, categoryId)
+
+            // BaseResponse의 isSuccess 확인
+            if (response.isSuccess) {
+                response.result.toEntity()
+            } else {
+                throw Exception(response.message ?: "홈 피드를 불러오는데 실패했습니다.")
+            }
         }
 }
 
