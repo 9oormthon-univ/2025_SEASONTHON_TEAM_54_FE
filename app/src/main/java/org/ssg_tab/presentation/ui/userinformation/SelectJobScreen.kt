@@ -16,39 +16,41 @@ import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
+import org.ssg_tab.presentation.ui.userinformation.model.OnboardingUiState
+import org.ssg_tab.presentation.ui.userinformation.model.OnboardingViewModel
 
 @Composable
 fun SelectJobScreen(
+    viewModel: OnboardingViewModel,
     onNavigateBack: () -> Unit,
-    onNextClick: () -> Unit
+    onOnboardingComplete: () -> Unit
 ) {
-    val jobs = listOf("직장인", "취준생", "학생", "프리랜서", "사업자", "공무원", "기타")
+    val uiState by viewModel.uiState.collectAsState()
 
-    var selectedJob by remember { mutableStateOf<String?>(null) }
-
-    val isButtonEnabled = selectedJob != null
+    LaunchedEffect(uiState.onboardingComplete) {
+        if (uiState.onboardingComplete) {
+            onOnboardingComplete()
+        }
+    }
 
     SelectJobScreenContent(
-        jobs = jobs,
-        selectedJob = selectedJob,
-        isButtonEnabled = isButtonEnabled,
-        onJobSelected = { job ->
-            selectedJob = if (selectedJob == job) null else job
-        },
+        uiState = uiState,
+        onJobSelected = viewModel::selectJob,
         onNavigateBack = onNavigateBack,
-        onNextClick = onNextClick
+        onNextClick = viewModel::submitOnboardingData
     )
 }
 
 @Composable
 fun SelectJobScreenContent(
-    jobs: List<String>,
-    selectedJob: String?,
-    isButtonEnabled: Boolean,
+    uiState: OnboardingUiState,
     onJobSelected: (String) -> Unit,
     onNavigateBack: () -> Unit,
     onNextClick: () -> Unit
 ) {
+    val jobs = listOf("직장인", "취준생", "학생", "프리랜서", "사업자", "공무원", "기타")
+    val isButtonEnabled = uiState.selectedJob != null
+
     Scaffold(
         containerColor = SsgTabTheme.colors.White,
         topBar = {
@@ -84,7 +86,7 @@ fun SelectJobScreenContent(
 
             SelectableChipGrid(
                 items = jobs,
-                selectedItem = selectedJob,
+                selectedItem = uiState.selectedJob,
                 onItemSelected = onJobSelected
             )
 
@@ -101,26 +103,12 @@ fun SelectJobScreenContent(
     }
 }
 
-
-@Preview(showBackground = true, name = "Initial State")
-@Composable
-private fun SelectJobScreen_Initial_Preview() {
-    SsgTabTheme {
-        SelectJobScreen(
-            onNavigateBack = {},
-            onNextClick = {}
-        )
-    }
-}
-
 @Preview(showBackground = true, name = "Job Selected State")
 @Composable
 private fun SelectJobScreen_Selected_Preview() {
     SsgTabTheme {
         SelectJobScreenContent(
-            jobs = listOf("직장인", "취준생", "학생", "프리랜서", "사업자", "공무원", "기타"),
-            selectedJob = "취준생",
-            isButtonEnabled = true,
+            uiState = OnboardingUiState(selectedJob = "취준생"),
             onJobSelected = {},
             onNavigateBack = {},
             onNextClick = {}

@@ -51,8 +51,8 @@ fun LoginScreen(
                 .noRippleClickable {
                     viewModel.signInWithKakao(
                         context = context,
-                        onSuccess = {
-                            onLoginSuccess
+                        onSuccess = { needSignUp ->
+                            onLoginSuccess(needSignUp)
                             Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                         },
                         onFailure = { error ->

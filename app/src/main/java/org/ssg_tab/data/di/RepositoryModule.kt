@@ -6,10 +6,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.ssg_tab.data.repositoryimpl.DummyRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.login.AuthRepositoryImpl
+import org.ssg_tab.data.repositoryimpl.onboarding.OnboardingRepositoryImpl
 import org.ssg_tab.data.repositoryimpl.quiz.QuizRepositoryImpl
 import org.ssg_tab.domain.repository.DummyRepository
 import org.ssg_tab.domain.repository.login.AuthRepository
+import org.ssg_tab.domain.repository.onboarding.OnboardingRepository
 import org.ssg_tab.domain.repository.quiz.QuizRepository
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,5 +31,11 @@ interface RepositoryModule {
     abstract  fun bindQuizRepository(
         quizRepositoryImpl: QuizRepositoryImpl
     ): QuizRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindOnboardingRepository(
+        onboardingRepositoryImpl: OnboardingRepositoryImpl
+    ): OnboardingRepository
 
 }
