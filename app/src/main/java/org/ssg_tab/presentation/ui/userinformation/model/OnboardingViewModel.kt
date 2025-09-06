@@ -1,6 +1,7 @@
 package org.ssg_tab.presentation.ui.userinformation.model
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ data class OnboardingUiState(
     val selectedAgeGroup: String? = null,
     val selectedRegion: String? = null,
     val selectedJob: String? = null,
+    val isLoading: Boolean = false,
     val onboardingComplete: Boolean = false,
     val error: String? = null
 )
@@ -26,10 +28,13 @@ class OnboardingViewModel @Inject constructor(
     private val onboardingRepository: OnboardingRepository
 ) : ViewModel() {
 
+    companion object {
+        private const val TAG = "OnboardingViewModel"
+    }
+
     private val _uiState = MutableStateFlow(OnboardingUiState())
     val uiState = _uiState.asStateFlow()
 
-    // 1단계: 관심사 선택
     fun selectInterest(interest: String) {
         _uiState.update { currentState ->
             val newSelection = currentState.selectedInterests.toMutableSet()
@@ -39,41 +44,75 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    // 2단계: 연령대 및 지역 선택
+
     fun selectAgeGroup(ageGroup: String) {
         _uiState.update { it.copy(selectedAgeGroup = ageGroup) }
     }
+
     fun selectRegion(region: String) {
         _uiState.update { it.copy(selectedRegion = region) }
     }
 
-    // 3단계: 직업 선택
     fun selectJob(job: String) {
         _uiState.update { it.copy(selectedJob = job) }
     }
 
     fun submitOnboardingData() {
         val currentState = _uiState.value
+        Log.d(TAG, "submitOnboardingData() called")
+        Log.d(TAG, "Current state: $currentState")
 
-        // TODO: 카테고리 가져오기 API
+        // 입력값 검증
+        if (currentState.selectedAgeGroup == null) {
+            _uiState.update { it.copy(error = "연령대를 선택해주세요.") }
+            return
+        }
+
+        if (currentState.selectedRegion == null) {
+            _uiState.update { it.copy(error = "지역을 선택해주세요.") }
+            return
+        }
+
+        if (currentState.selectedJob == null) {
+            _uiState.update { it.copy(error = "직업을 선택해주세요.") }
+            return
+        }
+
         val categoryIds = mapInterestsToIds(currentState.selectedInterests)
-
         val ageBand = mapAgeGroupToEnum(currentState.selectedAgeGroup)
 
+        if (ageBand == null) {
+            _uiState.update { it.copy(error = "올바른 연령대를 선택해주세요.") }
+            return
+        }
+
         val onboardingInfo = OnboardingEntity(
-            ageBand = ageBand ?: return,
-            region = currentState.selectedRegion ?: return,
-            job = currentState.selectedJob ?: return,
+            ageBand = ageBand,
+            region = currentState.selectedRegion!!,
+            job = currentState.selectedJob!!,
             categoryIds = categoryIds
         )
 
+        Log.d(TAG, "Submitting onboarding data: $onboardingInfo")
+
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+
             onboardingRepository.submitOnboardingInfo(onboardingInfo)
                 .onSuccess {
-                    _uiState.update { it.copy(onboardingComplete = true) }
+                    Log.d(TAG, "Onboarding submission SUCCESS")
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        onboardingComplete = true,
+                        error = null
+                    )}
                 }
                 .onFailure { error ->
-                    _uiState.update { it.copy(error = error.message) }
+                    Log.e(TAG, "Onboarding submission FAILED: ${error.message}")
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        error = error.message ?: "온보딩 정보 저장에 실패했습니다."
+                    )}
                 }
         }
     }
@@ -90,7 +129,17 @@ class OnboardingViewModel @Inject constructor(
     }
 
     private fun mapInterestsToIds(interests: Set<String>): List<Long> {
-        val map = mapOf("주식" to 1L, "취업" to 2L, "부동산" to 3L, "청약" to 4L, "암호화폐" to 5L)
+        val map = mapOf(
+            "주식" to 1L,
+            "취업" to 2L,
+            "부동산" to 3L,
+            "청약" to 4L,
+            "암호화폐" to 5L
+        )
         return interests.mapNotNull { map[it] }
+    }
+
+    fun clearError() {
+        _uiState.update { it.copy(error = null) }
     }
 }
