@@ -1,5 +1,6 @@
 package org.ssg_tab.presentation.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -79,6 +80,7 @@ fun HomeScreen(
 
         else -> {
             val newsItems = state.homeFeed?.toNewsItemList() ?: getDefaultNewsItems()
+            val currentContentId = newsItems.firstOrNull()?.id ?: -1
 
             Column(
                 modifier = modifier
@@ -96,7 +98,24 @@ fun HomeScreen(
                         .weight(1f),
                     navController = navController
                 )
-                HomeActionButton(onClick = {})
+
+                HomeActionButton(
+                    onShareClick = {
+                        Log.d("HomeScreen", "Share clicked for content: $currentContentId")
+                    },
+                    onLikeClick = {
+                        if (currentContentId != -1) {
+                            viewModel.toggleLike(currentContentId)
+                        }
+                    },
+                    isLiked = if (currentContentId != -1) {
+                        viewModel.isContentLiked(currentContentId)
+                    } else false,
+                    isLiking = if (currentContentId != -1) {
+                        viewModel.isContentBeingLiked(currentContentId)
+                    } else false
+                )
+
                 Spacer(modifier = Modifier.padding(14.dp))
             }
         }
