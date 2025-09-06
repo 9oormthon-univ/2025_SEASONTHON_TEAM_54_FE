@@ -15,38 +15,33 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.ssg_tab.R
 import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import org.ssg_tab.presentation.ui.userinformation.component.InterestChip
+import org.ssg_tab.presentation.ui.userinformation.model.OnboardingViewModel
 
 
 @Composable
 fun SelectCategoryScreen(
+    viewModel: OnboardingViewModel,
     onNextClick: () -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     val interests = listOf(
         "주식", "취업", "부동산", "청약", "암호화폐", "해외투자", "금융", "펀드", "경제상식"
     )
 
-    var selectedInterests by remember { mutableStateOf<Set<String>>(emptySet()) }
-
-    val isButtonEnabled = selectedInterests.size in 3..5
+    val isButtonEnabled = uiState.selectedInterests.size in 3..5
 
     SelectCategoryScreenContent(
         interests = interests,
-        selectedInterests = selectedInterests,
+        selectedInterests = uiState.selectedInterests,
         isButtonEnabled = isButtonEnabled,
-        onInterestClick = { interest ->
-            val newSelection = selectedInterests.toMutableSet()
-            if (newSelection.contains(interest)) {
-                newSelection.remove(interest)
-            } else {
-                newSelection.add(interest)
-            }
-            selectedInterests = newSelection
-        },
+        onInterestClick = viewModel::selectInterest,
         onNextClick = onNextClick
     )
 }
@@ -136,7 +131,8 @@ fun SelectCategoryScreenContent(
 private fun SelectCategoryScreen_Initial_Preview() {
     SsgTabTheme {
         SelectCategoryScreen(
-            onNextClick = {}
+            viewModel = viewModel(),
+            onNextClick = {},
         )
     }
 }

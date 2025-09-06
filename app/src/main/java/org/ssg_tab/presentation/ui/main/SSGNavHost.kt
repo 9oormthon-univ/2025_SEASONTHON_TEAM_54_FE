@@ -54,6 +54,7 @@ fun SSGNavHost(
             )
 
         loginNavigation(
+            navController = navigator.navController,
             paddingValues = paddingValues,
             snackbarHostState = snackbarHostState
         )

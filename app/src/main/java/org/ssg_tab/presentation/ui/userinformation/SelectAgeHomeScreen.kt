@@ -22,13 +22,18 @@ import org.ssg_tab.core.designsystem.component.SsgTabButton
 import org.ssg_tab.core.designsystem.component.SsgTabTopBar
 import org.ssg_tab.core.designsystem.theme.SsgTabTheme
 import org.ssg_tab.presentation.ui.userinformation.component.SelectableChip
+import org.ssg_tab.presentation.ui.userinformation.model.OnboardingUiState
+import org.ssg_tab.presentation.ui.userinformation.model.OnboardingViewModel
 
 
 @Composable
 fun SelectAgeHomeScreen(
+    viewModel: OnboardingViewModel,
     onNavigateBack: () -> Unit,
     onNextClick: () -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     val ageGroups = listOf("20-24세", "25-29세", "30-34세", "35-41세", "기타")
     val regions = listOf(
         "서울", "경기", "인천", "강원", "대전", "세종",
@@ -36,25 +41,17 @@ fun SelectAgeHomeScreen(
         "경남", "전남", "전북", "광주", "제주"
     )
 
-    var selectedAgeGroup by remember { mutableStateOf<String?>(null) }
-    var selectedRegion by remember { mutableStateOf<String?>(null) }
-
-    val isRegionVisible = selectedAgeGroup != null
-    val isButtonEnabled = selectedAgeGroup != null && selectedRegion != null
+    val isRegionVisible = uiState.selectedAgeGroup != null
+    val isButtonEnabled = uiState.selectedAgeGroup != null && uiState.selectedRegion != null
 
     SelectAgeHomeScreenContent(
         ageGroups = ageGroups,
         regions = regions,
-        selectedAgeGroup = selectedAgeGroup,
-        selectedRegion = selectedRegion,
+        uiState = uiState,
         isRegionVisible = isRegionVisible,
         isButtonEnabled = isButtonEnabled,
-        onAgeGroupSelected = { ageGroup ->
-            selectedAgeGroup = if (selectedAgeGroup == ageGroup) null else ageGroup
-        },
-        onRegionSelected = { region ->
-            selectedRegion = if (selectedRegion == region) null else region
-        },
+        onAgeGroupSelected = viewModel::selectAgeGroup,
+        onRegionSelected = viewModel::selectRegion,
         onNavigateBack = onNavigateBack,
         onNextClick = onNextClick
     )
@@ -64,8 +61,7 @@ fun SelectAgeHomeScreen(
 fun SelectAgeHomeScreenContent(
     ageGroups: List<String>,
     regions: List<String>,
-    selectedAgeGroup: String?,
-    selectedRegion: String?,
+    uiState: OnboardingUiState,
     isRegionVisible: Boolean,
     isButtonEnabled: Boolean,
     onAgeGroupSelected: (String) -> Unit,
@@ -117,7 +113,7 @@ fun SelectAgeHomeScreenContent(
             Spacer(modifier = Modifier.height(6.dp))
             SelectableChipGrid(
                 items = ageGroups,
-                selectedItem = selectedAgeGroup,
+                selectedItem = uiState.selectedAgeGroup,
                 onItemSelected = onAgeGroupSelected
             )
 
@@ -132,7 +128,7 @@ fun SelectAgeHomeScreenContent(
                     Spacer(modifier = Modifier.height(6.dp))
                     SelectableChipGrid(
                         items = regions,
-                        selectedItem = selectedRegion,
+                        selectedItem = uiState.selectedRegion,
                         onItemSelected = onRegionSelected
                     )
                 }
@@ -175,32 +171,18 @@ fun SelectableChipGrid(
     }
 }
 
-
-// 미리보기
-@Preview(showBackground = true, name = "Initial State")
-@Composable
-private fun SelectAgeHomeScreen_Initial_Preview() {
-    SsgTabTheme {
-        SelectAgeHomeScreen(
-            onNavigateBack = {},
-            onNextClick = {}
-        )
-    }
-}
-
 @Preview(showBackground = true, name = "지역 선택 표시 상태")
 @Composable
 private fun SelectAgeHomeScreen_RegionVisible_Preview() {
     SsgTabTheme {
         SelectAgeHomeScreenContent(
-            ageGroups = listOf("20-24세", "25-29세", "30-34세"),
+            ageGroups = listOf("20-24세", "25-29세", "30-34세", "기타"),
             regions = listOf(
                 "서울", "경기", "인천", "강원", "대전", "세종",
                 "충남", "충북", "부산", "울산", "대구", "경북",
                 "경남", "전남", "전북", "광주", "제주"
             ),
-            selectedAgeGroup = "25-29세",
-            selectedRegion = null,
+            uiState = OnboardingUiState(selectedAgeGroup = "25-29세"), // UiState 객체로 상태 전달
             isRegionVisible = true,
             isButtonEnabled = false,
             onAgeGroupSelected = {},
