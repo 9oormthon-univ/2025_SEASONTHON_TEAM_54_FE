@@ -105,6 +105,9 @@ fun QuizScreenWithViewModel(
                     currentQuizIndex = state.currentQuizIndex,
                     totalQuestions = state.totalQuestions,
                     selectedAnswer = state.selectedAnswer,
+                    isCurrentQuestionAnswered = state.isCurrentQuestionAnswered,
+                    currentQuestionResult = state.currentQuestionResult,
+                    isSubmittingAnswer = state.isSubmittingAnswer,
                     onOptionSelected = { viewModel.selectAnswer(it) },
                     onPreviousQuestion = { viewModel.previousQuestion() },
                     onNextQuestion = { viewModel.nextQuestion() },
@@ -112,6 +115,7 @@ fun QuizScreenWithViewModel(
                     isFirstQuestion = viewModel.isFirstQuestion(),
                     isLastQuestion = viewModel.isLastQuestion(),
                     modifier = modifier
+
                 )
             }
         }
@@ -243,6 +247,9 @@ private fun QuizContent(
     currentQuizIndex: Int,
     totalQuestions: Int,
     selectedAnswer: Int,
+    isCurrentQuestionAnswered: Boolean,
+    currentQuestionResult: Boolean?,
+    isSubmittingAnswer: Boolean,
     onOptionSelected: (Int) -> Unit,
     onPreviousQuestion: () -> Unit,
     onNextQuestion: () -> Unit,
@@ -347,14 +354,35 @@ private fun QuizContent(
                     QuizOptionItem(
                         text = option,
                         isSelected = selectedAnswer == index,
-                        onClick = {
-                            onOptionSelected(index)
-                        }
+                        isCorrect = if (isCurrentQuestionAnswered) {
+                            when {
+                                index == quiz.correctAnswerIndex -> true
+                                index == selectedAnswer && index != quiz.correctAnswerIndex -> false
+                                else -> null
+                            }
+                        } else null,
+                        isLoading = isSubmittingAnswer && selectedAnswer == index,
+                        onClick = { onOptionSelected(index) }
                     )
 
                     if (index < quiz.options.size - 1) {
                         Spacer(modifier = Modifier.height(12.dp))
                     }
+                }
+            }
+
+            // 제출 중 오버레이
+            if (isSubmittingAnswer) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.3f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = Color(0xFF42A5F5),
+                        modifier = Modifier.size(40.dp)
+                    )
                 }
             }
         }
@@ -390,10 +418,12 @@ private fun QuizContent(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_study_arrow_right),
                 contentDescription = "다음",
-                tint = if (isLastQuestion) SsgTabTheme.colors.LightGray else Color(0xFF42A5F5),
+                tint = if (isLastQuestion || !isCurrentQuestionAnswered) SsgTabTheme.colors.LightGray else Color(
+                    0xFF42A5F5
+                ),
                 modifier = Modifier
                     .size(16.dp)
-                    .clickable(enabled = !isLastQuestion) { onNextQuestion() }
+                    .clickable(enabled = !isLastQuestion && isCurrentQuestionAnswered) { onNextQuestion() }
             )
         }
 
@@ -568,32 +598,86 @@ fun QuizScreen(
 private fun QuizOptionItem(
     text: String,
     isSelected: Boolean,
+    isCorrect: Boolean? = null,
+    isLoading: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val backgroundColor = when {
+        isCorrect == true -> SsgTabTheme.colors.MainBlue
+        isCorrect == false && isSelected -> SsgTabTheme.colors.Error.copy(
+            alpha = 0.5F
+        )
+        isSelected -> Color(0xFFE3F2FD)
+        else -> SsgTabTheme.colors.WhiteGray
+    }
+
+    val textColor = when {
+        isCorrect == true -> SsgTabTheme.colors.White
+        isCorrect == false && isSelected -> SsgTabTheme.colors.DarkGray
+        isSelected -> Color(0xFF42A5F5)
+        else -> SsgTabTheme.colors.MidGray
+    }
+
+    val borderColor = when {
+        isCorrect == true -> Color.Transparent
+        isCorrect == false && isSelected -> SsgTabTheme.colors.Error
+        else -> Color.Transparent
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = if (isSelected) {
-                    Color(0xFFE3F2FD)
-                } else {
-                    SsgTabTheme.colors.WhiteGray
-                },
+                color = backgroundColor,
                 shape = RoundedCornerShape(12.dp)
             )
-            .clickable { onClick() }
+            .border(
+                width = if (isCorrect != null) 2.dp else 0.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .clickable(enabled = isCorrect == null && !isLoading) { onClick() }
             .padding(16.dp)
     ) {
-        Text(
-            text = text,
-            style = SsgTabTheme.typography.Regular_R,
-            color = if (isSelected) {
-                Color(0xFF42A5F5)
-            } else {
-                SsgTabTheme.colors.MidGray
-            },
-            lineHeight = 20.sp
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = text,
+                style = SsgTabTheme.typography.Regular_R,
+                color = textColor,
+                lineHeight = 20.sp,
+                modifier = Modifier.weight(1f)
+            )
+
+            when {
+                isLoading -> {
+                    CircularProgressIndicator(
+                        color = Color(0xFF42A5F5),
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
+                }
+
+                isCorrect == true -> {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_quiz_correct),
+                        contentDescription = "정답",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+
+                isCorrect == false && isSelected -> {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_quiz_incorrect),
+                        contentDescription = "오답",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+        }
     }
 }
