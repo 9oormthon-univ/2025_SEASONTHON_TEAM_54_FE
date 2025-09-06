@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.ssg_tab.domain.model.entity.QuizEntity
+import org.ssg_tab.domain.model.entity.quiz.QuizEntity
 import org.ssg_tab.domain.repository.quiz.QuizRepository
 import org.ssg_tab.presentation.ui.guide.state.QuizContract
 import javax.inject.Inject
