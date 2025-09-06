@@ -3,7 +3,7 @@ package org.ssg_tab.presentation.ui.mypage
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -23,8 +23,21 @@ fun SetInterestingScreen(
 ) {
 
     // 카테고리 목록
-    val categories = listOf(
+    val categoryTexts = listOf(
         "주식", "취업", "부동산", "청약", "암호화폐", "해외투자", "금융", "펀드", "경제상식"
+    )
+
+    val categoryIcons = listOf(
+        R.drawable.ic_category_stock,
+        R.drawable.ic_category_job,
+        R.drawable.ic_category_real,
+        R.drawable.ic_category_sub,
+        R.drawable.ic_category_cryptocurrency,
+        R.drawable.ic_category_for,
+        R.drawable.ic_category_fianace,
+        R.drawable.ic_category_fund,
+        R.drawable.ic_category_eco
+
     )
 
     var selectedCategories by remember { mutableStateOf<Set<String>>(setOf("주식", "청약")) }
@@ -34,7 +47,8 @@ fun SetInterestingScreen(
     val isButtonEnabled = selectedCategories.size in 3..5
 
     InterestSettingContent(
-        categories = categories,
+        categoryTexts = categoryTexts,
+        categoryIcons = categoryIcons,
         selectedCategories = selectedCategories,
         isButtonEnabled = isButtonEnabled,
         onCategoryClick = { category ->
@@ -55,7 +69,8 @@ fun SetInterestingScreen(
 
 @Composable
 fun InterestSettingContent(
-    categories: List<String>,
+    categoryTexts: List<String>,
+    categoryIcons: List<Int>,
     selectedCategories: Set<String>,
     isButtonEnabled: Boolean,
     onCategoryClick: (String) -> Unit,
@@ -105,11 +120,12 @@ fun InterestSettingContent(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(categories) { category ->
+                itemsIndexed(categoryTexts) { index, text ->
                     InterestChip(
-                        text = category,
-                        isSelected = selectedCategories.contains(category),
-                        onClick = { onCategoryClick(category) }
+                        text = text,
+                        iconResId = categoryIcons[index],
+                        isSelected = selectedCategories.contains(text),
+                        onClick = { onCategoryClick(text) }
                     )
                 }
             }
