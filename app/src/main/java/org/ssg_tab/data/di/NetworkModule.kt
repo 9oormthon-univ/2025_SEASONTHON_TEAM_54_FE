@@ -16,6 +16,7 @@ import org.ssg_tab.BuildConfig
 import org.ssg_tab.data.service.home.HomeFeedService
 import org.ssg_tab.data.service.quiz.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
+import org.ssg_tab.data.service.quiz.QuizCompleteService
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -84,5 +85,11 @@ object NetworkModule {
     @Singleton
     fun provdieHomeService(retrofit: Retrofit): HomeFeedService {
         return retrofit.create(HomeFeedService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieQuizCompleteService(retrofit: Retrofit): QuizCompleteService {
+        return retrofit.create(QuizCompleteService::class.java)
     }
 }
