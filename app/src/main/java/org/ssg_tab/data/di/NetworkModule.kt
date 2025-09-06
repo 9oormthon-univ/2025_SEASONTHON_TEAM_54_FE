@@ -22,6 +22,7 @@ import org.ssg_tab.data.service.quiz.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
 import org.ssg_tab.data.service.quiz.QuizCompleteService
 import org.ssg_tab.data.service.storage.StorageService
+import org.ssg_tab.data.service.study.StudyService
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -129,5 +130,11 @@ object NetworkModule {
     @Singleton
     fun provdieStorageService(retrofit: Retrofit): StorageService {
         return retrofit.create(StorageService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieStudyService(retrofit: Retrofit): StudyService {
+        return retrofit.create(StudyService::class.java)
     }
 }

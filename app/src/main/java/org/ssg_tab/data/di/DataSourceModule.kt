@@ -10,6 +10,7 @@ import org.ssg_tab.data.remote.datasource.home.HomeLikeDataSource
 import org.ssg_tab.data.remote.datasource.quiz.QuizCompleteDataSource
 import org.ssg_tab.data.remote.datasource.quiz.QuizDataSource
 import org.ssg_tab.data.remote.datasource.storage.StorageDataSource
+import org.ssg_tab.data.remote.datasource.study.StudyDataSource
 import org.ssg_tab.data.remote.datasourceImpl.AuthRemoteDataSourceImpl
 import org.ssg_tab.data.remote.datasourceImpl.home.HomeFeedDataSourceImpl
 import org.ssg_tab.data.remote.datasourceImpl.quiz.QuizDataSourceImpl
@@ -47,4 +48,9 @@ interface DataSourceModule {
     abstract fun bindStorageRemoteDataSource(
         storageDataSource: StorageDataSource
     ): StorageDataSource
+
+    @Binds
+    abstract fun bindStudyRemoteDataSource(
+        studyDataSource: StudyDataSource
+    ): StudyDataSource
 }
