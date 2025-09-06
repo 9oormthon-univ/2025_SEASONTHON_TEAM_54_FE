@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -26,14 +27,23 @@ import org.ssg_tab.core.util.noRippleClickable
 private fun PreviewHomeActionButton() {
     SsgTabTheme {
         Column {
-            HomeActionButton(onClick = {})
+            HomeActionButton(
+                isLiked = false,
+                isLiking = false,
+                onShareClick = {},
+                onLikeClick = {}
+            )
         }
     }
 }
 
+
 @Composable
 fun HomeActionButton(
-    onClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onLikeClick: () -> Unit,
+    isLiked: Boolean = false,
+    isLiking: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     ElevatedCard(
@@ -56,15 +66,26 @@ fun HomeActionButton(
                 contentDescription = "공유 아이콘",
                 tint = Color.Unspecified,
                 modifier = Modifier
-                    .noRippleClickable { onClick() }
+                    .noRippleClickable { onShareClick() }
             )
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_home_like_off),
-                contentDescription = "좋아요 아이콘",
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .noRippleClickable { onClick() }
-            )
+
+            if (isLiking) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp,
+                    color = Color(0xFF42A5F5)
+                )
+            } else {
+                Icon(
+                    imageVector = ImageVector.vectorResource(
+                        if (isLiked) R.drawable.ic_home_like_o else R.drawable.ic_home_like_off
+                    ),
+                    contentDescription = if (isLiked) "좋아요 취소" else "좋아요",
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .noRippleClickable { onLikeClick() }
+                )
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.ssg_tab.BuildConfig
 import org.ssg_tab.data.service.OnboardingService
 import org.ssg_tab.data.service.home.HomeFeedService
+import org.ssg_tab.data.service.home.HomeLikeService
 import org.ssg_tab.data.service.quiz.QuizService
 import org.ssg_tab.data.service.login.AuthApiService
 import org.ssg_tab.data.service.quiz.QuizCompleteService
@@ -98,5 +99,11 @@ object NetworkModule {
     @Singleton
     fun provdieQuizCompleteService(retrofit: Retrofit): QuizCompleteService {
         return retrofit.create(QuizCompleteService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provdieHomeLikeeService(retrofit: Retrofit): HomeLikeService {
+        return retrofit.create(HomeLikeService::class.java)
     }
 }
